@@ -1,0 +1,21 @@
+{
+  "name": "freeqy",
+  "version": "0.0.1",
+  "description": "Browser Based Synthesizer",
+  "main": "index.js",
+  "repository": "https://github.com/d-buettner/freeqy",
+  "author": "Deric <deric.buettner@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack --mode production --config webpack.config.js",
+    "dev": "webpack --watch --mode development --config webpack.config.js"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "html-webpack-plugin": "webpack-contrib/html-webpack-plugin",
+    "webpack": "^4.0.0",
+    "webpack-cli": "^2.0.9"
+  }
+}
