@@ -16,6 +16,10 @@ acorn@^5.0.0:
   version "5.4.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.4.1.tgz#fdc58d9d17f4a4e98d102ded826a9b9759125102"
 
+adsr-gain-node@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/adsr-gain-node/-/adsr-gain-node-1.0.8.tgz#ef1a41529a60bb83e08b632928e3d76c5ea28ecd"
+
 ajv-keywords@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-3.1.0.tgz#ac2b27939c543e95d2c06e7f7f5c27be4aa543be"

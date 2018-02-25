@@ -10,6 +10,9 @@
     "build": "webpack --mode production --config webpack.config.js",
     "dev": "webpack --watch --mode development --config webpack.config.js"
   },
+  "dependencies": {
+    "adsr-gain-node": "^1.0.8"
+  },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
