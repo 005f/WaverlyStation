@@ -11,7 +11,7 @@
     "dev": "webpack --watch --mode development --config webpack.config.js"
   },
   "dependencies": {
-    "adsr-gain-node": "^1.0.8"
+    "adsr-envelope": "^1.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
