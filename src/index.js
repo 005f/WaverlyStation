@@ -4,71 +4,62 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
 const ctx = new AudioContext();
 
-let env = new ADSREnvelope();
+const lockedKeys = {};
 
-let filter;
-let gain;
-let osc;
-let startTime;
 
-let keylocked = false;
-
-function startPlay() {
-
-  startTime = 0;
-
+function playNote(note) {
   // Oscillator
-  osc = ctx.createOscillator();
-
+  const osc = ctx.createOscillator();
   osc.type = 'sine';
-  osc.frequency.setValueAtTime(440, ctx.currentTime);
+  // Temporary, crude simulation of actual notes
+  osc.frequency.setValueAtTime(note * 10, ctx.currentTime);
 
-  osc.onended = () => {
-    osc.disconnect();
-    gain.disconnect();
-  }
-
-  // Filter
-  filter = ctx.createBiquadFilter();
-
+  const filter = ctx.createBiquadFilter();
   filter.type = 'lowpass';
   filter.frequency.value = 500;
   filter.Q.value = 20;
 
-  gain = ctx.createGain();
+  const env = new ADSREnvelope();
+  env.gateTime = Infinity;
+  const gain = ctx.createGain();
+  env.applyTo(gain.gain, ctx.currentTime);
 
   // Connect
   osc.connect(filter);
   filter.connect(gain);
   gain.connect(ctx.destination);
 
-  document.addEventListener('keydown', handleKeydown);
-  document.addEventListener('keyup', handleKeyup);
+  osc.start(ctx.currentTime);
+
+  const startTime = ctx.currentTime;
+
+  const releaseNote = () => {
+    gain.gain.cancelScheduledValues(startTime);
+    env.gateTime = ctx.currentTime - startTime;
+    env.applyTo(gain.gain, startTime);
+
+    osc.stop(startTime + env.duration);
+
+    lockedKeys[note] = false;
+  }
+
+  document.addEventListener('keyup', releaseNote);
+
+  // Clean up after note is finished playing
+  osc.onended = () => {
+    document.removeEventListener('keyup', releaseNote);
+    osc.disconnect();
+    gain.disconnect();
+  }
 }
 
-const handleKeydown = () => {
-  if (!keylocked) {
-    startTime = ctx.currentTime;
+const handleKeydown = (e) => {
+  // keydown event fires multiple times so we only handle the first event
+  if (!lockedKeys[e.keyCode]) {
+    lockedKeys[e.keyCode] = true;
 
-    env.gateTime = Infinity;
-    env.applyTo(gain.gain, startTime);
-    osc.start(startTime);
-
-    keylocked = true;
+    playNote(e.keyCode);
   }
 };
 
-const handleKeyup = () => {
-  keylocked = false;
-  gain.gain.cancelScheduledValues(startTime);
-  env.gateTime = ctx.currentTime - startTime;
-  env.applyTo(gain.gain, startTime);
-  osc.stop(startTime + env.duration);
-
-  document.removeEventListener('keydown', handleKeydown);
-  document.removeEventListener('keyup', handleKeyup);
-
-  startPlay();
-}
-
-startPlay();
+document.addEventListener('keydown', handleKeydown);
