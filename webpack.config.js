@@ -9,7 +9,14 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
       },
+      {
+        test: /\.css$/,
+        use: [ 'style-loader', 'css-loader' ]
+      }
     ],
   },
-  plugins: [new HtmlWebpackPlugin({ title: 'Freeqy' })],
+  plugins: [new HtmlWebpackPlugin({
+    title: 'Freeqy',
+    template: __dirname + '/src/index.html'
+  })],
 };

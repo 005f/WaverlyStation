@@ -6,6 +6,7 @@ const ctx = new AudioContext()
 
 const lockedKeys = {}
 
+let settings = {}
 
 function playNote(note) {
   const osc = ctx.createOscillator()
@@ -19,11 +20,11 @@ function playNote(note) {
   filter.Q.value = 20
 
   const env = new ADSREnvelope({
-    decayTime: 0.6,
-    decayCurve: 'exp',
-    sustainLevel: 0.05,
-    releaseTime: 0.3,
-    peakLevel: 0.08,
+    decayTime: settings.adsr.decayTime,
+    decayCurve: settings.adsr.decayCurve,
+    sustainLevel: settings.adsr.sustainLevel,
+    releaseTime: settings.adsr.releaseTime,
+    peakLevel: settings.adsr.peakLevel,
   })
   env.gateTime = Infinity
   const gain = ctx.createGain()
@@ -66,6 +67,9 @@ const handleKeydown = (e) => {
   }
 }
 
-export default function initSynth() {
+export default function initSynth(store) {
+  settings.adsr = store.getState()
+  store.subscribe(() => settings.adsr = store.getState())
+
   document.addEventListener('keydown', handleKeydown)
 }
