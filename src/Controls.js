@@ -1,6 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { func } from 'prop-types'
 import Slider from 'react-rangeslider'
+import ADSRType from './types.js'
 import 'react-rangeslider/lib/index.css'
 
 
@@ -49,14 +50,9 @@ export default function Controls({
 }
 
 Controls.propTypes = {
-  adsr: PropTypes.shape({
-    attackTime: PropTypes.number.isRequired,
-    decayTime: PropTypes.number.isRequired,
-    sustainLevel: PropTypes.number.isRequired,
-    releaseTime: PropTypes.number.isRequired,
-  }).isRequired,
-  changeAttack: PropTypes.func.isRequired,
-  changeDecay: PropTypes.func.isRequired,
-  changeSustain: PropTypes.func.isRequired,
-  changeRelease: PropTypes.func.isRequired,
+  adsr: ADSRType.isRequired,
+  changeAttack: func.isRequired,
+  changeDecay: func.isRequired,
+  changeSustain: func.isRequired,
+  changeRelease: func.isRequired,
 }
