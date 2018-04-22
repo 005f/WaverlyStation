@@ -20,11 +20,11 @@ function playNote(note) {
   filter.Q.value = 20
 
   const env = new ADSREnvelope({
-    decayTime: settings.adsr.decayTime,
-    decayCurve: settings.adsr.decayCurve,
-    sustainLevel: settings.adsr.sustainLevel,
-    releaseTime: settings.adsr.releaseTime,
-    peakLevel: settings.adsr.peakLevel,
+    decayTime: settings.envelope.decayTime,
+    decayCurve: settings.envelope.decayCurve,
+    sustainLevel: settings.envelope.sustainLevel,
+    releaseTime: settings.envelope.releaseTime,
+    peakLevel: settings.envelope.peakLevel,
   })
   env.gateTime = Infinity
   const gain = ctx.createGain()
@@ -68,8 +68,8 @@ const handleKeydown = (e) => {
 }
 
 export default function initSynth(store) {
-  settings.adsr = store.getState()
-  store.subscribe(() => settings.adsr = store.getState())
+  settings.envelope = store.getState()
+  store.subscribe(() => settings.envelope = store.getState())
 
   document.addEventListener('keydown', handleKeydown)
 }

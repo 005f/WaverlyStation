@@ -1,4 +1,4 @@
-const adsr = (
+const envelope = (
   state = {
     attackTime: 0.01,
     decayTime: 0.6,
@@ -18,9 +18,11 @@ const adsr = (
       return Object.assign({}, state, { sustainLevel: action.payload })
     case 'CHANGE_RELEASE':
       return Object.assign({}, state, { releaseTime: action.payload })
+    case 'CHANGE_AMPLITUDE':
+      return Object.assign({}, state, { peakLevel: action.payload })
     default:
       return state
   } 
 }
 
-export default adsr
+export default envelope

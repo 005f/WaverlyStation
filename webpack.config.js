@@ -9,6 +9,7 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
       },
+
       {
         test: /\.css$/,
         use: [
@@ -23,6 +24,11 @@ module.exports = {
           },
         ],
       },
+
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        loader: 'file-loader'
+      }
     ],
   },
   plugins: [new HtmlWebpackPlugin({

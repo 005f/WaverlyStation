@@ -1,9 +1,20 @@
+.control-panel {
+    border: 5px solid black;
+    padding: 5px;
+}
+
 .controls-group {
+    align-items: center;
+    border: 3px solid black;
     display: flex;
     flex-direction: column;
+    font-family: 'Open Sans', sans-serif;
+    margin: 5px;
     text-align: center;
-    border: 3px solid black;
-    align-items: center;
+}
+
+.group-header {
+    font-size: 24px;
 }
 
 .slider-group {
