@@ -5,4 +5,5 @@ export const ADSRType = shape({
   decayTime: number.isRequired,
   sustainLevel: number.isRequired,
   releaseTime: number.isRequired,
+  peakLevel: number.isRequired,
 })

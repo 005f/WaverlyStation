@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import adsr from './reducers'
 import initSynth from './synthEngine'
-import ControlsContainer from './ControlsContainer'
+import ControlsContainer from './containers/ControlsContainer'
 
 const store = createStore(adsr)
 initSynth(store)

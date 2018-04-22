@@ -1,0 +1,16 @@
+.controls-group {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border: 3px solid black;
+    align-items: center;
+}
+
+.slider-group {
+    display: flex;
+}
+
+.slider-wrapper {
+    border: 1px grey dashed;
+    padding: 0 10px;
+}
