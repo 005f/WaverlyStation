@@ -1,19 +1,20 @@
 import React from 'react'
 import { func } from 'prop-types'
 import Slider from 'react-rangeslider'
-import { EnvelopeType } from '../../types.js'
+import { AmplifierType, EnvelopeType } from '../../types.js'
 // We don't want vendor styles to be modularized
 import '!style-loader!css-loader!react-rangeslider/lib/index.css'
 import styles from './Controls.css'
 
 
 export default function Controls({
+  amplifier,
   envelope,
   changeAttack,
   changeDecay,
   changeSustain,
   changeRelease,
-  changeAmplitude,
+  changeAmpLevel,
 }) {
   return (
     <div className={styles['control-panel']}>
@@ -47,7 +48,7 @@ export default function Controls({
 
           <div className={styles['slider-wrapper']}>
             <Slider
-              max={0.06}
+              max={envelope.peakLevel}
               onChange={changeSustain}
               orientation="vertical"
               step={0.001}
@@ -72,17 +73,17 @@ export default function Controls({
       </div>
 
       <div className={styles['controls-group']}>
-        <h2 className={styles['group-header']}>Amplitude</h2>
+        <h2 className={styles['group-header']}>Amplifier</h2>
 
         <div className={styles['slider-group']}>
           <div className={styles['slider-wrapper']}>
             <Slider
-              max={0.12}
-              min={0.06}
-              onChange={changeAmplitude}
+              max={1}
+              min={0}
+              onChange={changeAmpLevel}
               orientation="vertical"
-              step={0.005}
-              value={envelope.peakLevel}
+              step={0.1}
+              value={amplifier.level}
             />
           </div>
         </div>
@@ -92,9 +93,11 @@ export default function Controls({
 }
 
 Controls.propTypes = {
+  amplifier: AmplifierType.isRequired,
   envelope: EnvelopeType.isRequired,
   changeAttack: func.isRequired,
   changeDecay: func.isRequired,
   changeSustain: func.isRequired,
   changeRelease: func.isRequired,
+  changeAmpLevel: func.isRequired,
 }

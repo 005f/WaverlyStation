@@ -27,21 +27,25 @@ function playNote(note) {
     peakLevel: settings.envelope.peakLevel,
   })
   env.gateTime = Infinity
-  const gain = ctx.createGain()
-  env.applyTo(gain.gain, ctx.currentTime)
+  const envGain = ctx.createGain()
+  env.applyTo(envGain.gain, ctx.currentTime)
+
+  const masterGain = ctx.createGain()
+  masterGain.gain.setValueAtTime(settings.amplifier.level, ctx.currentTime)
 
   osc.connect(filter)
-  filter.connect(gain)
-  gain.connect(ctx.destination)
+  filter.connect(envGain)
+  envGain.connect(masterGain)
+  masterGain.connect(ctx.destination)
 
   osc.start(ctx.currentTime)
 
   const startTime = ctx.currentTime
 
   const releaseNote = () => {
-    gain.gain.cancelScheduledValues(startTime)
+    envGain.gain.cancelScheduledValues(startTime)
     env.gateTime = ctx.currentTime - startTime
-    env.applyTo(gain.gain, startTime)
+    env.applyTo(envGain.gain, startTime)
 
     osc.stop(startTime + env.duration)
 
@@ -54,7 +58,7 @@ function playNote(note) {
   osc.onended = () => {
     document.removeEventListener('keyup', releaseNote)
     osc.disconnect()
-    gain.disconnect()
+    envGain.disconnect()
   }
 }
 
@@ -68,8 +72,8 @@ const handleKeydown = (e) => {
 }
 
 export default function initSynth(store) {
-  settings.envelope = store.getState()
-  store.subscribe(() => settings.envelope = store.getState())
+  settings = store.getState()
+  store.subscribe(() => settings = store.getState())
 
   document.addEventListener('keydown', handleKeydown)
 }

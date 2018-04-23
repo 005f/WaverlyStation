@@ -1,3 +1,5 @@
+import { combineReducers } from 'redux'
+
 const envelope = (
   state = {
     attackTime: 0.01,
@@ -18,11 +20,26 @@ const envelope = (
       return Object.assign({}, state, { sustainLevel: action.payload })
     case 'CHANGE_RELEASE':
       return Object.assign({}, state, { releaseTime: action.payload })
-    case 'CHANGE_AMPLITUDE':
-      return Object.assign({}, state, { peakLevel: action.payload })
     default:
       return state
   } 
 }
 
-export default envelope
+const amplifier = (
+  state = { level: 0.5 },
+  action,
+  ) => {
+  switch (action.type) {
+    case 'CHANGE_AMP_LEVEL':
+      return Object.assign({}, state, { level: action.payload })
+    default:
+      return state
+  }
+}
+
+const rootReducer = combineReducers({
+  envelope,
+  amplifier,
+})
+
+export default rootReducer

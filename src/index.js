@@ -2,11 +2,11 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
-import envelope from './reducers'
+import rootReducer from './reducers'
 import initSynth from './synthEngine'
 import ControlsContainer from './containers/ControlsContainer'
 
-const store = createStore(envelope)
+const store = createStore(rootReducer)
 initSynth(store)
 
 render(

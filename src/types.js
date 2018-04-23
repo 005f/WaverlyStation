@@ -7,3 +7,5 @@ export const EnvelopeType = shape({
   releaseTime: number.isRequired,
   peakLevel: number.isRequired,
 })
+
+export const AmplifierType = shape({ level: number.isRequired })

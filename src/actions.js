@@ -5,4 +5,4 @@ export const changeDecay = createAction('CHANGE_DECAY')
 export const changeSustain = createAction('CHANGE_SUSTAIN')
 export const changeRelease = createAction('CHANGE_RELEASE')
 
-export const changeAmplitude = createAction('CHANGE_AMPLITUDE')
+export const changeAmpLevel = createAction('CHANGE_AMP_LEVEL')

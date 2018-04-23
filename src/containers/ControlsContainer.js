@@ -5,18 +5,18 @@ import {
   changeDecay,
   changeSustain,
   changeRelease,
-  changeAmplitude,
+  changeAmpLevel,
 } from '../actions'
 
 
-const mapStateToProps = state => ({ envelope: state })
+const mapStateToProps = state => ({ ...state })
 
 const mapDispatchToProps = dispatch => ({
   changeAttack: level => dispatch(changeAttack(level)),
   changeDecay: level => dispatch(changeDecay(level)),
   changeSustain: level => dispatch(changeSustain(level)),
   changeRelease: level => dispatch(changeRelease(level)),
-  changeAmplitude: level => dispatch(changeAmplitude(level)),
+  changeAmpLevel: level => dispatch(changeAmpLevel(level)),
 })
 
 export default connect(
