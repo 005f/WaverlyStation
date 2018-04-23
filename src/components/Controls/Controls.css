@@ -13,8 +13,10 @@
     text-align: center;
 }
 
-.group-header {
-    font-size: 24px;
+.controls-group .group-header {
+    font-style: italic;
+    font-size: 28px;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .slider-group {
