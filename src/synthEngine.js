@@ -16,8 +16,8 @@ function playNote(note) {
 
   const filter = ctx.createBiquadFilter()
   filter.type = 'lowpass'
-  filter.frequency.value = 500
-  filter.Q.value = 20
+  filter.frequency.value = settings.filter.cutoff
+  filter.Q.value = settings.filter.Q
 
   const env = new ADSREnvelope({
     decayTime: settings.envelope.decayTime,

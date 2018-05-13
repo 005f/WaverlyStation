@@ -6,6 +6,8 @@ import {
   changeSustain,
   changeRelease,
   changeAmpLevel,
+  changeCutoff,
+  changeQ,
 } from '../actions'
 
 
@@ -17,6 +19,8 @@ const mapDispatchToProps = dispatch => ({
   changeSustain: level => dispatch(changeSustain(level)),
   changeRelease: level => dispatch(changeRelease(level)),
   changeAmpLevel: level => dispatch(changeAmpLevel(level)),
+  changeCutoff: level => dispatch(changeCutoff(level)),
+  changeQ: level => dispatch(changeQ(level)),
 })
 
 export default connect(

@@ -8,4 +8,9 @@ export const EnvelopeType = shape({
   peakLevel: number.isRequired,
 })
 
+export const FilterType = shape({
+  cutoff: number.isRequired,
+  Q: number.isRequired,
+})
+
 export const AmplifierType = shape({ level: number.isRequired })

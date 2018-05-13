@@ -25,6 +25,23 @@ const envelope = (
   } 
 }
 
+const filter = (
+  state = {
+    cutoff: 350,
+    Q: 1,
+  },
+  action,
+  ) => {
+  switch (action.type) {
+    case 'CHANGE_CUTOFF':
+      return Object.assign({}, state, { cutoff: action.payload })
+    case 'CHANGE_Q':
+      return Object.assign({}, state, { Q: action.payload })
+    default:
+      return state
+  }
+}
+
 const amplifier = (
   state = { level: 0.5 },
   action,
@@ -39,6 +56,7 @@ const amplifier = (
 
 const rootReducer = combineReducers({
   envelope,
+  filter,
   amplifier,
 })
 
