@@ -32,7 +32,7 @@ module.exports = {
     ],
   },
   plugins: [new HtmlWebpackPlugin({
-    title: 'Freeqy',
+    title: 'Waverly Station',
     template: __dirname + '/src/index.html'
   })],
 };

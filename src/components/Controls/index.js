@@ -1,11 +1,12 @@
 import React from 'react'
 import { func } from 'prop-types'
 import Slider from 'react-rangeslider'
-import { AmplifierType, EnvelopeType, FilterType } from '../../types.js'
-// We don't want vendor styles to be modularized
-import '!style-loader!css-loader!react-rangeslider/lib/index.css'
-import styles from './Controls.css'
+import Filter from '../Filter'
+import { AmplifierType, EnvelopeType, FilterType } from '../../types'
 
+import styles from './Controls.css'
+// We don't want vendor styles to be modularized
+import '!style-loader!css-loader!react-rangeslider/lib/index.css' // eslint-disable-line
 
 export default function Controls({
   amplifier,
@@ -78,14 +79,16 @@ export default function Controls({
       <div className={styles['controls-group']}>
         <h2 className={styles['group-header']}>Filter</h2>
 
+        <Filter response={filter.response} />
+
         <div className={styles['slider-group']}>
           <div className={styles['slider-wrapper']}>
             <Slider
-              max={5000}
+              max={20000}
               min={30}
               onChange={changeCutoff}
               orientation="vertical"
-              step={5}
+              step={10}
               value={filter.cutoff}
             />
 

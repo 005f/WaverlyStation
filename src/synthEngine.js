@@ -1,4 +1,5 @@
 import ADSREnvelope from 'adsr-envelope'
+import { FILTER_GRAPH_FREQ_RESOLUTION, NUM_OCTAVES } from './constants'
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext
 
@@ -7,17 +8,25 @@ const ctx = new AudioContext()
 const lockedKeys = {}
 
 let settings = {}
+let filter1
 
 function playNote(note) {
   const osc = ctx.createOscillator()
-  osc.type = 'sine'
+  osc.type = 'square'
   // Temporary, crude simulation of actual notes
   osc.frequency.setValueAtTime(note * 10, ctx.currentTime)
 
-  const filter = ctx.createBiquadFilter()
-  filter.type = 'lowpass'
-  filter.frequency.value = settings.filter.cutoff
-  filter.Q.value = settings.filter.Q
+  filter1 = ctx.createBiquadFilter()
+  filter1.type = 'lowpass'
+  filter1.frequency.value = settings.filter.cutoff
+  filter1.Q.value = settings.filter.Q / 2
+
+  // We use 2 filters to simulate a 4-pole filter with 24db per octave of roll off
+  const filter2 = ctx.createBiquadFilter()
+  filter2.type = 'lowpass'
+  filter2.frequency.value = settings.filter.cutoff
+  // With the extra filter, we have to half the Q to prevent crazy resonance
+  filter2.Q.value = settings.filter.Q / 2
 
   const env = new ADSREnvelope({
     decayTime: settings.envelope.decayTime,
@@ -33,8 +42,9 @@ function playNote(note) {
   const masterGain = ctx.createGain()
   masterGain.gain.setValueAtTime(settings.amplifier.level, ctx.currentTime)
 
-  osc.connect(filter)
-  filter.connect(envGain)
+  osc.connect(filter1)
+  filter1.connect(envGain)
+  filter2.connect(envGain)
   envGain.connect(masterGain)
   masterGain.connect(ctx.destination)
 
@@ -71,9 +81,28 @@ const handleKeydown = (e) => {
   }
 }
 
-export default function initSynth(store) {
+export function getFilterResponse() {
+  const emptyFrequencies = new Float32Array(FILTER_GRAPH_FREQ_RESOLUTION)
+  const magResponse = new Float32Array(FILTER_GRAPH_FREQ_RESOLUTION)
+  const phaseResponse = new Float32Array(FILTER_GRAPH_FREQ_RESOLUTION)
+
+  const nyquist = 0.5 * ctx.sampleRate
+
+  const frequencies = emptyFrequencies.map((_, i) => {
+    const normalizedIndex = i / FILTER_GRAPH_FREQ_RESOLUTION
+    return nyquist * (2.0 ** (NUM_OCTAVES * (normalizedIndex - 1.0)))
+  })
+
+  filter1.getFrequencyResponse(frequencies, magResponse, phaseResponse)
+
+  return magResponse
+}
+
+export function initSynth(store) {
   settings = store.getState()
-  store.subscribe(() => settings = store.getState())
+  store.subscribe(() => {
+    settings = store.getState()
+  })
 
   document.addEventListener('keydown', handleKeydown)
 }

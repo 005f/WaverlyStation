@@ -11,6 +11,7 @@ export const EnvelopeType = shape({
 export const FilterType = shape({
   cutoff: number.isRequired,
   Q: number.isRequired,
+  response: shape({}).isRequired,
 })
 
 export const AmplifierType = shape({ level: number.isRequired })

@@ -10,7 +10,7 @@ const envelope = (
     peakLevel: 0.08,
   },
   action,
-  ) => {
+) => {
   switch (action.type) {
     case 'CHANGE_ATTACK':
       return Object.assign({}, state, { attackTime: action.payload })
@@ -22,21 +22,24 @@ const envelope = (
       return Object.assign({}, state, { releaseTime: action.payload })
     default:
       return state
-  } 
+  }
 }
 
 const filter = (
   state = {
     cutoff: 350,
     Q: 1,
+    response: new Float32Array(),
   },
   action,
-  ) => {
+) => {
   switch (action.type) {
     case 'CHANGE_CUTOFF':
       return Object.assign({}, state, { cutoff: action.payload })
     case 'CHANGE_Q':
       return Object.assign({}, state, { Q: action.payload })
+    case 'UPDATE_FILTER_RESPONSE':
+      return Object.assign({}, state, { response: action.payload })
     default:
       return state
   }
@@ -45,7 +48,7 @@ const filter = (
 const amplifier = (
   state = { level: 0.5 },
   action,
-  ) => {
+) => {
   switch (action.type) {
     case 'CHANGE_AMP_LEVEL':
       return Object.assign({}, state, { level: action.payload })

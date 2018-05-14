@@ -1,0 +1,3 @@
+export const FILTER_GRAPH_FREQ_RESOLUTION = 300
+export const FILTER_GRAPH_DB_RESOLUTION = 150
+export const NUM_OCTAVES = 11
