@@ -7,7 +7,7 @@ const envelope = (
     decayCurve: 'exp',
     sustainLevel: 0.05,
     releaseTime: 0.3,
-    peakLevel: 0.08,
+    peakLevel: 0.1,
   },
   action,
 ) => {

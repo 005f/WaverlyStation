@@ -52,7 +52,7 @@ export default function Controls({
 
           <div className={styles['slider-wrapper']}>
             <Slider
-              max={envelope.peakLevel}
+              max={1}
               onChange={changeSustain}
               orientation="vertical"
               step={0.001}
