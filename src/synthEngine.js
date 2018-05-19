@@ -1,5 +1,6 @@
 import ADSREnvelope from 'adsr-envelope'
 import { FILTER_GRAPH_FREQ_RESOLUTION, NUM_OCTAVES } from './constants'
+import store from './index'
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext
 
@@ -51,6 +52,20 @@ function playNote(note) {
   osc.start(ctx.currentTime)
 
   const startTime = ctx.currentTime
+
+  store.subscribe(() => {
+    const newState = store.getState()
+
+    const newCutoff = newState.filter.cutoff
+    const newQ = newState.filter.Q / 2
+
+    filter1.frequency.setValueAtTime(newCutoff, ctx.currentTime)
+    filter2.frequency.setValueAtTime(newCutoff, ctx.currentTime)
+
+    filter1.Q.setValueAtTime(newQ, ctx.currentTime)
+    filter2.Q.setValueAtTime(newQ, ctx.currentTime)
+
+  })
 
   const releaseNote = () => {
     envGain.gain.cancelScheduledValues(startTime)

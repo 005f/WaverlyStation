@@ -7,6 +7,7 @@ import { initSynth } from './synthEngine'
 import ControlsContainer from './containers/ControlsContainer'
 
 const store = createStore(rootReducer)
+export default store
 
 initSynth(store)
 
@@ -16,5 +17,3 @@ render(
   </Provider>,
   document.getElementById('root'),
 )
-
-export default store
