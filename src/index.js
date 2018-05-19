@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import rootReducer from './reducers'
-import { initSynth } from './synthEngine'
+import { initSynth } from './synthesizer'
 import ControlsContainer from './containers/ControlsContainer'
 
 const store = createStore(rootReducer)

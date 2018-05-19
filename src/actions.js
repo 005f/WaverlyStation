@@ -1,6 +1,6 @@
 import { createAction } from 'redux-actions'
 import store from './index'
-import { getFilterResponse } from './synthEngine'
+import { getFilterResponse } from './synthesizer'
 
 export const changeAttack = createAction('CHANGE_ATTACK')
 export const changeDecay = createAction('CHANGE_DECAY')
