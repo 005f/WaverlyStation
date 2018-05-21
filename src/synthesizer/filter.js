@@ -21,11 +21,7 @@ export function updateFilter(ctx, filter, type, cutoff, Q) {
 }
 
 export function getLogFilterResponse(cutoff, Q) {
-  const targetFreqs = []
-  for (var i = 1; i <= 20000; i++) {
-    targetFreqs.push(i)
-  };
-  //const targetFreqs = getLogScaleFrequencySample(FILTER_GRAPH_FREQ_RESOLUTION)
+  const targetFreqs = getLogScaleFrequencySample(FILTER_GRAPH_FREQ_RESOLUTION)
 
   return calculateFilterResponse(targetFreqs, cutoff, Q)
 }
