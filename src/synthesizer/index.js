@@ -1,11 +1,12 @@
 import ADSREnvelope from 'adsr-envelope'
-import { FILTER_GRAPH_FREQ_RESOLUTION, NUM_OCTAVES } from '../constants'
 import store from '../index'
-import { createFilter, updateFilter } from './filter'
+import { createFilter, updateFilter, getLogFilterResponse } from './filter'
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext
 
 const ctx = new AudioContext()
+// Sample rate is read only and depends on user system
+window.SAMPLE_RATE = ctx.sampleRate
 
 const lockedKeys = {}
 
@@ -95,23 +96,10 @@ const handleKeydown = (e) => {
   }
 }
 
-export function getFilterResponse() {
-  const emptyFrequencies = new Float32Array(FILTER_GRAPH_FREQ_RESOLUTION)
-  const magResponse = new Float32Array(FILTER_GRAPH_FREQ_RESOLUTION)
-  const phaseResponse = new Float32Array(FILTER_GRAPH_FREQ_RESOLUTION)
-
-  const nyquist = 0.5 * ctx.sampleRate
-
-  const frequencies = emptyFrequencies.map((_, i) => {
-    const normalizedIndex = i / FILTER_GRAPH_FREQ_RESOLUTION
-
-    return nyquist * (2.0 ** (NUM_OCTAVES * (normalizedIndex - 1.0)))
-  })
-
-  filter1.getFrequencyResponse(frequencies, magResponse, phaseResponse)
-
-  return magResponse
-}
+export const getLogFilterResponseFromSettings = () => getLogFilterResponse(
+  settings.filter.cutoff,
+  settings.filter.Q,
+)
 
 export function initSynth(store) {
   settings = store.getState()

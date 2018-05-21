@@ -12,6 +12,7 @@
     "lint": "./node_modules/.bin/eslint src"
   },
   "dependencies": {
+    "Complex": "^3.0.0",
     "adsr-envelope": "^1.0.0",
     "prop-types": "^15.6.1",
     "react": "^16.3.1",

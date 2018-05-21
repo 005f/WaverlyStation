@@ -1,6 +1,6 @@
 import { createAction } from 'redux-actions'
 import store from './index'
-import { getFilterResponse } from './synthesizer'
+import { getLogFilterResponseFromSettings } from './synthesizer'
 
 export const changeAttack = createAction('CHANGE_ATTACK')
 export const changeDecay = createAction('CHANGE_DECAY')
@@ -14,11 +14,11 @@ const updateFilterResponse = createAction('UPDATE_FILTER_RESPONSE')
 
 export function updateFilterCutoff(cutoff) {
   store.dispatch(changeCutoff(cutoff))
-  store.dispatch(updateFilterResponse(getFilterResponse()))
+  store.dispatch(updateFilterResponse(getLogFilterResponseFromSettings()))
 }
 export function updateFilterQ(Q) {
   store.dispatch(changeQ(Q))
-  store.dispatch(updateFilterResponse(getFilterResponse()))
+  store.dispatch(updateFilterResponse(getLogFilterResponseFromSettings()))
 }
 
 

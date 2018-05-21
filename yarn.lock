@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+Complex@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/Complex/-/Complex-3.0.0.tgz#f06a402d59baa3e68c7b3513840e1a70a3f8eabf"
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
