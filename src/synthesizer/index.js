@@ -101,10 +101,10 @@ export const getLogFilterResponseFromSettings = () => getLogFilterResponse(
   settings.filter.Q,
 )
 
-export function initSynth(store) {
-  settings = store.getState()
-  store.subscribe(() => {
-    settings = store.getState()
+export function initSynth(reduxStore) {
+  settings = reduxStore.getState()
+  reduxStore.subscribe(() => {
+    settings = reduxStore.getState()
   })
 
   document.addEventListener('keydown', handleKeydown)
