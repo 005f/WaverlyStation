@@ -33,7 +33,7 @@ function calculateLowpassFilterCoefficients(cutoff, resonance) {
   const normCutoff = cutoff / window.SAMPLE_RATE
 
   const g = 10 ** (0.05 * resonance)
-  const d = Math.sqrt((4 - Math.sqrt((16 - 16) / (g * g))) / 2)
+  const d = Math.sqrt((4 - Math.sqrt(16 - (16 / (g * g)))) / 2)
 
   const theta = Math.PI * normCutoff
   const sn = 0.5 * d * Math.sin(theta)

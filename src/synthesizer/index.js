@@ -1,5 +1,6 @@
 import ADSREnvelope from 'adsr-envelope'
 import store from '../index'
+import { updateFilterResponse } from '../actions'
 import { createFilter, updateFilter, getLogFilterResponse } from './filter'
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext
@@ -106,6 +107,8 @@ export function initSynth(reduxStore) {
   reduxStore.subscribe(() => {
     settings = reduxStore.getState()
   })
+
+  reduxStore.dispatch(updateFilterResponse(getLogFilterResponseFromSettings()))
 
   document.addEventListener('keydown', handleKeydown)
 }

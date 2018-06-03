@@ -10,7 +10,7 @@ export const changeRelease = createAction('CHANGE_RELEASE')
 
 const changeCutoff = createAction('CHANGE_CUTOFF')
 const changeQ = createAction('CHANGE_Q')
-const updateFilterResponse = createAction('UPDATE_FILTER_RESPONSE')
+export const updateFilterResponse = createAction('UPDATE_FILTER_RESPONSE')
 
 export function updateFilterCutoff(cutoff) {
   store.dispatch(changeCutoff(cutoff))
