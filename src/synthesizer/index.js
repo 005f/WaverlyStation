@@ -1,7 +1,10 @@
 import ADSREnvelope from 'adsr-envelope'
 import store from '../index'
 import { updateFilterResponse } from '../actions'
+import { initializeOsc } from './osc'
 import { createFilter, updateFilter, getLogFilterResponse } from './filter'
+
+import { OSC_A, OSC_B } from '../constants'
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext
 
@@ -15,10 +18,8 @@ let settings = {}
 let filter1
 
 function playNote(note) {
-  const osc = ctx.createOscillator()
-  osc.type = settings.osc.waveform
-  // Temporary, crude simulation of actual notes
-  osc.frequency.setValueAtTime(note * 10, ctx.currentTime)
+  const oscA = initializeOsc(ctx, settings.osc[OSC_A], note)
+  const oscB = initializeOsc(ctx, settings.osc[OSC_B], note)
 
   // We use 2 filters to simulate a 4-pole filter with 24db per octave of roll off
   // With the extra filter, we have to half the Q to prevent double resonance
@@ -39,13 +40,15 @@ function playNote(note) {
   const masterGain = ctx.createGain()
   masterGain.gain.setValueAtTime(settings.amplifier.level, ctx.currentTime)
 
-  osc.connect(filter1)
+  oscA.connect(filter1)
+  oscB.connect(filter1)
   filter1.connect(envGain)
   filter2.connect(envGain)
   envGain.connect(masterGain)
   masterGain.connect(ctx.destination)
 
-  osc.start(ctx.currentTime)
+  oscA.start(ctx.currentTime)
+  oscB.start(ctx.currentTime)
 
   const startTime = ctx.currentTime
 
@@ -73,7 +76,8 @@ function playNote(note) {
     env.gateTime = ctx.currentTime - startTime
     env.applyTo(envGain.gain, startTime)
 
-    osc.stop(startTime + env.duration)
+    oscA.stop(startTime + env.duration)
+    oscB.stop(startTime + env.duration)
 
     lockedKeys[note] = false
   }
@@ -81,9 +85,14 @@ function playNote(note) {
   document.addEventListener('keyup', releaseNote)
 
   // Clean up after note is finished playing
-  osc.onended = () => {
+  oscA.onended = () => {
     document.removeEventListener('keyup', releaseNote)
-    osc.disconnect()
+    oscA.disconnect()
+    envGain.disconnect()
+  }
+  oscB.onended = () => {
+    document.removeEventListener('keyup', releaseNote)
+    oscB.disconnect()
     envGain.disconnect()
   }
 }

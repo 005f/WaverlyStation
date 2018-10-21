@@ -1,17 +1,36 @@
 import { combineReducers } from 'redux'
-import { WAVEFORM_TYPE_SINE } from 'constants'
+import { get } from 'lodash'
+import {
+  OSC_A,
+  OSC_B,
+  WAVEFORM_TYPE_SINE,
+} from './constants'
 
-const osc = (
-  state = {
-    waveform: WAVEFORM_TYPE_SINE,
-  },
-  action,
-) => {
+const oscReducer = (state, action) => {
   switch (action.type) {
     case 'CHANGE_WAVEFORM':
-      return Object.assign({}, state, { waveform: action.payload })
+      return Object.assign({}, state, { waveform: action.payload.waveform })
     default:
       return state
+  }
+}
+
+function osc(
+  state = {
+    [OSC_A]: { waveform: WAVEFORM_TYPE_SINE },
+    [OSC_B]: { waveform: WAVEFORM_TYPE_SINE },
+  },
+  action,
+) {
+  if (get(action, 'payload.id') === OSC_A) {
+    return {
+      ...state,
+      [OSC_A]: oscReducer(state[OSC_A], action),
+    }
+  }
+  return {
+    ...state,
+    [OSC_B]: oscReducer(state[OSC_B], action),
   }
 }
 

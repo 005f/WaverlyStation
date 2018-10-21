@@ -10,6 +10,7 @@ import {
   updateFilterCutoff,
   updateFilterQ,
 } from '../actions'
+import { OSC_A, OSC_B } from '../constants'
 
 
 const mapStateToProps = state => ({ ...state })
@@ -20,7 +21,14 @@ const mapDispatchToProps = dispatch => ({
   changeSustain: level => dispatch(changeSustain(level)),
   changeRelease: level => dispatch(changeRelease(level)),
   changeAmpLevel: level => dispatch(changeAmpLevel(level)),
-  changeWaveform: waveform => dispatch(changeWaveform(waveform)),
+  changeOscAWaveform: waveform => dispatch(changeWaveform({
+    id: OSC_A,
+    waveform,
+  })),
+  changeOscBWaveform: waveform => dispatch(changeWaveform({
+    id: OSC_B,
+    waveform,
+  })),
   changeCutoff: level => updateFilterCutoff(level),
   changeQ: level => updateFilterQ(level),
 })

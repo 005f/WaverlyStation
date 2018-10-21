@@ -1,3 +1,6 @@
+export const OSC_A = 'A'
+export const OSC_B = 'B'
+
 export const FILTER_GRAPH_FREQ_RESOLUTION = 300
 export const FILTER_GRAPH_DB_RESOLUTION = 150
 

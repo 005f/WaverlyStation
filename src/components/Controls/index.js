@@ -26,17 +26,27 @@ export default function Controls({
   changeAmpLevel,
   changeCutoff,
   changeQ,
-  changeWaveform,
+  changeOscAWaveform,
+  changeOscBWaveform,
 }) {
   return (
     <div className={styles['control-panel']}>
       <div className={styles['controls-group']}>
-        <h2 className={styles['group-header']}>Oscilator</h2>
+        <h2 className={styles['group-header']}>Oscilator A</h2>
 
-        <button onClick={() => changeWaveform(WAVEFORM_TYPE_SINE)}>∿</button>
-        <button onClick={() => changeWaveform(WAVEFORM_TYPE_SAW)}>⊿⊿</button>
-        <button onClick={() => changeWaveform(WAVEFORM_TYPE_TRIANGLE)}>△</button>
-        <button onClick={() => changeWaveform(WAVEFORM_TYPE_SQUARE)}>⊓</button>
+        <button onClick={() => changeOscAWaveform(WAVEFORM_TYPE_SINE)}>∿</button>
+        <button onClick={() => changeOscAWaveform(WAVEFORM_TYPE_SAW)}>⊿⊿</button>
+        <button onClick={() => changeOscAWaveform(WAVEFORM_TYPE_TRIANGLE)}>△</button>
+        <button onClick={() => changeOscAWaveform(WAVEFORM_TYPE_SQUARE)}>⊓</button>
+      </div>
+
+      <div className={styles['controls-group']}>
+        <h2 className={styles['group-header']}>Oscilator B</h2>
+
+        <button onClick={() => changeOscBWaveform(WAVEFORM_TYPE_SINE)}>∿</button>
+        <button onClick={() => changeOscBWaveform(WAVEFORM_TYPE_SAW)}>⊿⊿</button>
+        <button onClick={() => changeOscBWaveform(WAVEFORM_TYPE_TRIANGLE)}>△</button>
+        <button onClick={() => changeOscBWaveform(WAVEFORM_TYPE_SQUARE)}>⊓</button>
       </div>
 
       <div className={styles['controls-group']}>
@@ -133,11 +143,11 @@ export default function Controls({
         <div className={styles['slider-group']}>
           <div className={styles['slider-wrapper']}>
             <Slider
-              max={1}
+              max={0.5}
               min={0}
               onChange={changeAmpLevel}
               orientation="vertical"
-              step={0.1}
+              step={0.05}
               value={amplifier.level}
             />
           </div>
@@ -158,5 +168,6 @@ Controls.propTypes = {
   changeAmpLevel: func.isRequired,
   changeCutoff: func.isRequired,
   changeQ: func.isRequired,
-  changeWaveform: func.isRequired,
+  changeOscAWaveform: func.isRequired,
+  changeOscBWaveform: func.isRequired,
 }
