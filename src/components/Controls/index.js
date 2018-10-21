@@ -4,6 +4,13 @@ import Slider from 'react-rangeslider'
 import Filter from '../Filter'
 import { AmplifierType, EnvelopeType, FilterType } from '../../types'
 
+import {
+  WAVEFORM_TYPE_SAW,
+  WAVEFORM_TYPE_SINE,
+  WAVEFORM_TYPE_SQUARE,
+  WAVEFORM_TYPE_TRIANGLE,
+} from '../../constants'
+
 import styles from './Controls.css'
 // We don't want vendor styles to be modularized
 import '!style-loader!css-loader!react-rangeslider/lib/index.css' // eslint-disable-line
@@ -19,9 +26,19 @@ export default function Controls({
   changeAmpLevel,
   changeCutoff,
   changeQ,
+  changeWaveform,
 }) {
   return (
     <div className={styles['control-panel']}>
+      <div className={styles['controls-group']}>
+        <h2 className={styles['group-header']}>Oscilator</h2>
+
+        <button onClick={() => changeWaveform(WAVEFORM_TYPE_SINE)}>∿</button>
+        <button onClick={() => changeWaveform(WAVEFORM_TYPE_SAW)}>⊿⊿</button>
+        <button onClick={() => changeWaveform(WAVEFORM_TYPE_TRIANGLE)}>△</button>
+        <button onClick={() => changeWaveform(WAVEFORM_TYPE_SQUARE)}>⊓</button>
+      </div>
+
       <div className={styles['controls-group']}>
         <h2 className={styles['group-header']}>Envelope</h2>
 
@@ -141,4 +158,5 @@ Controls.propTypes = {
   changeAmpLevel: func.isRequired,
   changeCutoff: func.isRequired,
   changeQ: func.isRequired,
+  changeWaveform: func.isRequired,
 }

@@ -1,4 +1,19 @@
 import { combineReducers } from 'redux'
+import { WAVEFORM_TYPE_SINE } from 'constants'
+
+const osc = (
+  state = {
+    waveform: WAVEFORM_TYPE_SINE,
+  },
+  action,
+) => {
+  switch (action.type) {
+    case 'CHANGE_WAVEFORM':
+      return Object.assign({}, state, { waveform: action.payload })
+    default:
+      return state
+  }
+}
 
 const envelope = (
   state = {
@@ -58,6 +73,7 @@ const amplifier = (
 }
 
 const rootReducer = combineReducers({
+  osc,
   envelope,
   filter,
   amplifier,

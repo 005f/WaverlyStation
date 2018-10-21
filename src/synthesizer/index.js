@@ -16,7 +16,7 @@ let filter1
 
 function playNote(note) {
   const osc = ctx.createOscillator()
-  osc.type = 'square'
+  osc.type = settings.osc.waveform
   // Temporary, crude simulation of actual notes
   osc.frequency.setValueAtTime(note * 10, ctx.currentTime)
 
