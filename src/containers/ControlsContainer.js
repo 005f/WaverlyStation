@@ -3,6 +3,7 @@ import Controls from '../components/Controls'
 import {
   changeCents,
   changeSemitones,
+  changeOscGain,
   changeAttack,
   changeDecay,
   changeSustain,
@@ -31,6 +32,10 @@ const mapDispatchToProps = dispatch => ({
     id: OSC_A,
     semitones,
   })),
+  changeOscAGain: gain => dispatch(changeOscGain({
+    id: OSC_A,
+    gain,
+  })),
   changeOscBCents: cents => dispatch(changeCents({
     id: OSC_B,
     cents,
@@ -38,6 +43,10 @@ const mapDispatchToProps = dispatch => ({
   changeOscBSemitones: semitones => dispatch(changeSemitones({
     id: OSC_B,
     semitones,
+  })),
+  changeOscBGain: gain => dispatch(changeOscGain({
+    id: OSC_B,
+    gain,
   })),
   changeOscAWaveform: waveform => dispatch(changeWaveform({
     id: OSC_A,

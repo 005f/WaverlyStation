@@ -5,6 +5,7 @@ import { getLogFilterResponseFromSettings } from './synthesizer'
 export const changeWaveform = createAction('CHANGE_WAVEFORM')
 export const changeCents = createAction('CHANGE_CENTS')
 export const changeSemitones = createAction('CHANGE_SEMITONES')
+export const changeOscGain = createAction('CHANGE_OSC_GAIN')
 
 export const changeAttack = createAction('CHANGE_ATTACK')
 export const changeDecay = createAction('CHANGE_DECAY')

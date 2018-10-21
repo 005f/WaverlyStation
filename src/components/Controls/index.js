@@ -1,5 +1,5 @@
 import React from 'react'
-import { func } from 'prop-types'
+import { func, shape } from 'prop-types'
 import Slider from 'react-rangeslider'
 import Filter from '../Filter'
 import { AmplifierType, EnvelopeType, FilterType, OscillatorType } from '../../types'
@@ -35,7 +35,10 @@ export default function Controls({
   changeQ,
   changeOscAWaveform,
   changeOscBWaveform,
+  changeOscAGain,
+  changeOscBGain,
 }) {
+  console.log(osc)
   return (
     <div className={styles['control-panel']}>
       <div className={`${styles['controls-group']} ${styles['split-group']}`}>
@@ -75,6 +78,19 @@ export default function Controls({
                 />
 
                 <div>Coarse</div>
+              </div>
+
+              <div className={styles['slider-wrapper']}>
+                <Slider
+                  max={1}
+                  min={0}
+                  onChange={changeOscAGain}
+                  orientation="vertical"
+                  step={0.05}
+                  value={osc[OSC_A].gain}
+                />
+
+                <div>Level</div>
               </div>
             </div>
           </div>
@@ -116,6 +132,19 @@ export default function Controls({
                 />
 
                 <div>Coarse</div>
+              </div>
+
+              <div className={styles['slider-wrapper']}>
+                <Slider
+                  max={1}
+                  min={0}
+                  onChange={changeOscBGain}
+                  orientation="vertical"
+                  step={0.05}
+                  value={osc[OSC_B].gain}
+                />
+
+                <div>Level</div>
               </div>
             </div>
           </div>
@@ -234,7 +263,10 @@ Controls.propTypes = {
   amplifier: AmplifierType.isRequired,
   envelope: EnvelopeType.isRequired,
   filter: FilterType.isRequired,
-  osc: OscillatorType.isRequired,
+  osc: shape({
+    [OSC_A]: OscillatorType.isRequired,
+    [OSC_B]: OscillatorType.isRequired,
+  }),
   changeAttack: func.isRequired,
   changeDecay: func.isRequired,
   changeSustain: func.isRequired,
@@ -248,4 +280,6 @@ Controls.propTypes = {
   changeOscASemitones: func.isRequired,
   changeOscBCents: func.isRequired,
   changeOscBSemitones: func.isRequired,
+  changeOscAGain: func.isRequired,
+  changeOscBGain: func.isRequired,
 }

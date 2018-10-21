@@ -20,4 +20,5 @@ export const OscillatorType = shape({
   waveform: string.isRequired,
   cents: number.isRequired,
   semitones: number.isRequired,
+  gain: number.isRequired,
 })

@@ -1,7 +1,7 @@
 import ADSREnvelope from 'adsr-envelope'
 import store from '../index'
 import { updateFilterResponse } from '../actions'
-import { initializeOsc } from './osc'
+import { createGainNodeForOsc, initializeOsc } from './osc'
 import { createFilter, updateFilter, getLogFilterResponse } from './filter'
 
 import { OSC_A, OSC_B } from '../constants'
@@ -20,6 +20,9 @@ let filter1
 function playNote(note) {
   const oscA = initializeOsc(ctx, settings.osc[OSC_A], note)
   const oscB = initializeOsc(ctx, settings.osc[OSC_B], note)
+
+  const oscAGain = createGainNodeForOsc(ctx, oscA, settings.osc[OSC_A].gain)
+  const oscBGain = createGainNodeForOsc(ctx, oscB, settings.osc[OSC_B].gain)
 
   // We use 2 filters to simulate a 4-pole filter with 24db per octave of roll off
   // With the extra filter, we have to half the Q to prevent double resonance
@@ -40,8 +43,8 @@ function playNote(note) {
   const masterGain = ctx.createGain()
   masterGain.gain.setValueAtTime(settings.amplifier.level, ctx.currentTime)
 
-  oscA.connect(filter1)
-  oscB.connect(filter1)
+  oscAGain.connect(filter1)
+  oscBGain.connect(filter1)
   filter1.connect(envGain)
   filter2.connect(envGain)
   envGain.connect(masterGain)
