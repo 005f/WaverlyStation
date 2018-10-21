@@ -4,5 +4,8 @@ export function initializeOsc(ctx, settings, note) {
   // Temporary, crude simulation of actual notes
   osc.frequency.setValueAtTime(note * 10, ctx.currentTime)
 
+  const semitonesAsCents = settings.semitones * 100
+  osc.detune.setValueAtTime(settings.cents + semitonesAsCents, ctx.currentTime)
+
   return osc
 }

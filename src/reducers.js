@@ -6,10 +6,20 @@ import {
   WAVEFORM_TYPE_SINE,
 } from './constants'
 
+const defaultOsc = {
+  waveform: WAVEFORM_TYPE_SINE,
+  cents: 0,
+  semitones: 0,
+}
+
 const oscReducer = (state, action) => {
   switch (action.type) {
     case 'CHANGE_WAVEFORM':
       return Object.assign({}, state, { waveform: action.payload.waveform })
+    case 'CHANGE_CENTS':
+      return Object.assign({}, state, { cents: action.payload.cents })
+    case 'CHANGE_SEMITONES':
+      return Object.assign({}, state, { semitones: action.payload.semitones })
     default:
       return state
   }
@@ -17,8 +27,8 @@ const oscReducer = (state, action) => {
 
 function osc(
   state = {
-    [OSC_A]: { waveform: WAVEFORM_TYPE_SINE },
-    [OSC_B]: { waveform: WAVEFORM_TYPE_SINE },
+    [OSC_A]: defaultOsc,
+    [OSC_B]: defaultOsc,
   },
   action,
 ) {

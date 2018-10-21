@@ -1,4 +1,4 @@
-import { number, shape } from 'prop-types'
+import { number, shape, string } from 'prop-types'
 
 export const EnvelopeType = shape({
   attackTime: number.isRequired,
@@ -15,3 +15,9 @@ export const FilterType = shape({
 })
 
 export const AmplifierType = shape({ level: number.isRequired })
+
+export const OscillatorType = shape({
+  waveform: string.isRequired,
+  cents: number.isRequired,
+  semitones: number.isRequired,
+})

@@ -1,6 +1,8 @@
 import { connect } from 'react-redux'
 import Controls from '../components/Controls'
 import {
+  changeCents,
+  changeSemitones,
   changeAttack,
   changeDecay,
   changeSustain,
@@ -21,6 +23,22 @@ const mapDispatchToProps = dispatch => ({
   changeSustain: level => dispatch(changeSustain(level)),
   changeRelease: level => dispatch(changeRelease(level)),
   changeAmpLevel: level => dispatch(changeAmpLevel(level)),
+  changeOscACents: cents => dispatch(changeCents({
+    id: OSC_A,
+    cents,
+  })),
+  changeOscASemitones: semitones => dispatch(changeSemitones({
+    id: OSC_A,
+    semitones,
+  })),
+  changeOscBCents: cents => dispatch(changeCents({
+    id: OSC_B,
+    cents,
+  })),
+  changeOscBSemitones: semitones => dispatch(changeSemitones({
+    id: OSC_B,
+    semitones,
+  })),
   changeOscAWaveform: waveform => dispatch(changeWaveform({
     id: OSC_A,
     waveform,

@@ -2,13 +2,15 @@ import React from 'react'
 import { func } from 'prop-types'
 import Slider from 'react-rangeslider'
 import Filter from '../Filter'
-import { AmplifierType, EnvelopeType, FilterType } from '../../types'
+import { AmplifierType, EnvelopeType, FilterType, OscillatorType } from '../../types'
 
 import {
   WAVEFORM_TYPE_SAW,
   WAVEFORM_TYPE_SINE,
   WAVEFORM_TYPE_SQUARE,
   WAVEFORM_TYPE_TRIANGLE,
+  OSC_A,
+  OSC_B,
 } from '../../constants'
 
 import styles from './Controls.css'
@@ -19,6 +21,11 @@ export default function Controls({
   amplifier,
   envelope,
   filter,
+  osc,
+  changeOscACents,
+  changeOscASemitones,
+  changeOscBCents,
+  changeOscBSemitones,
   changeAttack,
   changeDecay,
   changeSustain,
@@ -31,22 +38,88 @@ export default function Controls({
 }) {
   return (
     <div className={styles['control-panel']}>
-      <div className={styles['controls-group']}>
-        <h2 className={styles['group-header']}>Oscilator A</h2>
+      <div className={`${styles['controls-group']} ${styles['split-group']}`}>
+        <div className={styles['controls-group-section']}>
 
-        <button onClick={() => changeOscAWaveform(WAVEFORM_TYPE_SINE)}>∿</button>
-        <button onClick={() => changeOscAWaveform(WAVEFORM_TYPE_SAW)}>⊿⊿</button>
-        <button onClick={() => changeOscAWaveform(WAVEFORM_TYPE_TRIANGLE)}>△</button>
-        <button onClick={() => changeOscAWaveform(WAVEFORM_TYPE_SQUARE)}>⊓</button>
-      </div>
+          <h2 className={styles['group-header']}>Oscilator A</h2>
 
-      <div className={styles['controls-group']}>
-        <h2 className={styles['group-header']}>Oscilator B</h2>
+          <div className={styles['horizontal-group']}>
+            <div className={styles['vertical-group']}>
+              <button onClick={() => changeOscAWaveform(WAVEFORM_TYPE_SINE)}>∿</button>
+              <button onClick={() => changeOscAWaveform(WAVEFORM_TYPE_SAW)}>⊿⊿</button>
+              <button onClick={() => changeOscAWaveform(WAVEFORM_TYPE_TRIANGLE)}>△</button>
+              <button onClick={() => changeOscAWaveform(WAVEFORM_TYPE_SQUARE)}>⊓</button>
+            </div>
+            <div className={styles['slider-group']}>
+              <div className={styles['slider-wrapper']}>
+                <Slider
+                  max={100}
+                  min={-100}
+                  onChange={changeOscACents}
+                  orientation="vertical"
+                  step={1}
+                  value={osc[OSC_A].cents}
+                />
 
-        <button onClick={() => changeOscBWaveform(WAVEFORM_TYPE_SINE)}>∿</button>
-        <button onClick={() => changeOscBWaveform(WAVEFORM_TYPE_SAW)}>⊿⊿</button>
-        <button onClick={() => changeOscBWaveform(WAVEFORM_TYPE_TRIANGLE)}>△</button>
-        <button onClick={() => changeOscBWaveform(WAVEFORM_TYPE_SQUARE)}>⊓</button>
+                <div>Fine</div>
+              </div>
+
+              <div className={styles['slider-wrapper']}>
+                <Slider
+                  max={24}
+                  min={-24}
+                  onChange={changeOscASemitones}
+                  orientation="vertical"
+                  step={1}
+                  value={osc[OSC_A].semitones}
+                />
+
+                <div>Coarse</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles['controls-group-section']}>
+          <h2 className={styles['group-header']}>Oscilator B</h2>
+
+          <div className={styles['horizontal-group']}>
+            <div className={styles['vertical-group']}>
+              <button onClick={() => changeOscBWaveform(WAVEFORM_TYPE_SINE)}>∿</button>
+              <button onClick={() => changeOscBWaveform(WAVEFORM_TYPE_SAW)}>⊿⊿</button>
+              <button onClick={() => changeOscBWaveform(WAVEFORM_TYPE_TRIANGLE)}>△</button>
+              <button onClick={() => changeOscBWaveform(WAVEFORM_TYPE_SQUARE)}>⊓</button>
+            </div>
+
+            <div className={styles['slider-group']}>
+              <div className={styles['slider-wrapper']}>
+                <Slider
+                  max={100}
+                  min={-100}
+                  onChange={changeOscBCents}
+                  orientation="vertical"
+                  step={1}
+                  value={osc[OSC_B].cents}
+                />
+
+                <div>Fine</div>
+              </div>
+
+              <div className={styles['slider-wrapper']}>
+                <Slider
+                  max={24}
+                  min={-24}
+                  onChange={changeOscBSemitones}
+                  orientation="vertical"
+                  step={1}
+                  value={osc[OSC_B].semitones}
+                />
+
+                <div>Coarse</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className={styles['controls-group']}>
@@ -161,6 +234,7 @@ Controls.propTypes = {
   amplifier: AmplifierType.isRequired,
   envelope: EnvelopeType.isRequired,
   filter: FilterType.isRequired,
+  osc: OscillatorType.isRequired,
   changeAttack: func.isRequired,
   changeDecay: func.isRequired,
   changeSustain: func.isRequired,
@@ -170,4 +244,8 @@ Controls.propTypes = {
   changeQ: func.isRequired,
   changeOscAWaveform: func.isRequired,
   changeOscBWaveform: func.isRequired,
+  changeOscACents: func.isRequired,
+  changeOscASemitones: func.isRequired,
+  changeOscBCents: func.isRequired,
+  changeOscBSemitones: func.isRequired,
 }

@@ -10,7 +10,31 @@
     flex-direction: column;
     font-family: 'Open Sans', sans-serif;
     margin: 5px;
+    padding: 10px;
     text-align: center;
+}
+
+.split-group {
+    flex-direction: row;
+}
+
+.horizontal-group {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.vertical-group {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.controls-group-section {
+    border: 2px solid black;
+    width: 48%;
+    margin: 0 10px;
+    padding: 5px;
 }
 
 .controls-group .group-header {
