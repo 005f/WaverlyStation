@@ -10,7 +10,7 @@ const defaultOsc = {
   waveform: WAVEFORM_TYPE_SINE,
   cents: 0,
   semitones: 0,
-  gain: 0.5
+  gain: 0.5,
 }
 
 const oscReducer = (state, action) => {
@@ -21,7 +21,7 @@ const oscReducer = (state, action) => {
       return Object.assign({}, state, { cents: action.payload.cents })
     case 'CHANGE_SEMITONES':
       return Object.assign({}, state, { semitones: action.payload.semitones })
-      case 'CHANGE_OSC_GAIN':
+    case 'CHANGE_OSC_GAIN':
       return Object.assign({}, state, { gain: action.payload.gain })
     default:
       return state

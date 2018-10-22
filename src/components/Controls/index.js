@@ -38,7 +38,6 @@ export default function Controls({
   changeOscAGain,
   changeOscBGain,
 }) {
-  console.log(osc)
   return (
     <div className={styles['control-panel']}>
       <div className={`${styles['controls-group']} ${styles['split-group']}`}>
@@ -266,7 +265,7 @@ Controls.propTypes = {
   osc: shape({
     [OSC_A]: OscillatorType.isRequired,
     [OSC_B]: OscillatorType.isRequired,
-  }),
+  }).isRequired,
   changeAttack: func.isRequired,
   changeDecay: func.isRequired,
   changeSustain: func.isRequired,
