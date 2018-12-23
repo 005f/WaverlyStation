@@ -1,21 +1,70 @@
 import { combineReducers } from 'redux'
 import { get } from 'lodash'
 import {
+  LFO_A,
+  LFO_B,
   OSC_A,
   OSC_B,
   WAVEFORM_TYPE_SINE,
 } from './constants'
 
+const defaultLFO = {
+  rate: 6,
+  waveform: WAVEFORM_TYPE_SINE,
+  sends: {
+    filterFreq: 0,
+    filterRes: 0,
+  },
+}
+
+const lfoReducer = (state, action) => {
+  switch (action.type) {
+    case 'CHANGE_LFO_RATE':
+      return Object.assign({}, state, { rate: action.payload.rate })
+    case 'CHANGE_LFO_WAVEFORM':
+      return Object.assign({}, state, { waveform: action.payload.waveform })
+    case 'CHANGE_LFO_SEND':
+      return {
+        ...state,
+        sends: {
+          ...state.sends,
+          ...action.payload.sends,
+        },
+      }
+    default:
+      return state
+  }
+}
+
+function lfo(
+  state = {
+    [LFO_A]: defaultLFO,
+    [LFO_B]: defaultLFO,
+  },
+  action,
+) {
+  if (get(action, 'payload.id') === LFO_A) {
+    return {
+      ...state,
+      [LFO_A]: lfoReducer(state[LFO_A], action),
+    }
+  }
+  return {
+    ...state,
+    [LFO_B]: lfoReducer(state[LFO_B], action),
+  }
+}
+
 const defaultOsc = {
   waveform: WAVEFORM_TYPE_SINE,
   cents: 0,
   semitones: 0,
-  gain: 0.5,
+  gain: 0.8,
 }
 
 const oscReducer = (state, action) => {
   switch (action.type) {
-    case 'CHANGE_WAVEFORM':
+    case 'CHANGE_OSC_WAVEFORM':
       return Object.assign({}, state, { waveform: action.payload.waveform })
     case 'CHANGE_CENTS':
       return Object.assign({}, state, { cents: action.payload.cents })
@@ -93,7 +142,7 @@ const filter = (
 }
 
 const amplifier = (
-  state = { level: 0.5 },
+  state = { level: 0.8 },
   action,
 ) => {
   switch (action.type) {
@@ -105,6 +154,7 @@ const amplifier = (
 }
 
 const rootReducer = combineReducers({
+  lfo,
   osc,
   envelope,
   filter,

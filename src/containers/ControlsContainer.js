@@ -9,11 +9,14 @@ import {
   changeSustain,
   changeRelease,
   changeAmpLevel,
-  changeWaveform,
+  changeOscWaveform,
+  changeLFORate,
+  changeLFOWaveform,
+  changeLFOSend,
   updateFilterCutoff,
   updateFilterQ,
 } from '../actions'
-import { OSC_A, OSC_B } from '../constants'
+import { OSC_A, OSC_B, LFO_A, LFO_B } from '../constants'
 
 
 const mapStateToProps = state => ({ ...state })
@@ -24,6 +27,32 @@ const mapDispatchToProps = dispatch => ({
   changeSustain: level => dispatch(changeSustain(level)),
   changeRelease: level => dispatch(changeRelease(level)),
   changeAmpLevel: level => dispatch(changeAmpLevel(level)),
+  changeLFOARate: rate => dispatch(changeLFORate({
+    id: LFO_A,
+    rate,
+  })),
+  changeLFOBRate: rate => dispatch(changeLFORate({
+    id: LFO_B,
+    rate,
+  })),
+  changeLFOAWaveform: waveform => dispatch(changeLFOWaveform({
+    id: LFO_A,
+    waveform,
+  })),
+  changeLFOBWaveform: waveform => dispatch(changeLFOWaveform({
+    id: LFO_B,
+    waveform,
+  })),
+  changeLFOASend: (value, destination) => dispatch(changeLFOSend({
+    id: LFO_A,
+    [destination]: value,
+  })),
+  changeLFOBSend: (value, destination) => dispatch(changeLFOSend({
+    id: LFO_B,
+    sends: {
+      [destination]: value,
+    },
+  })),
   changeOscACents: cents => dispatch(changeCents({
     id: OSC_A,
     cents,
@@ -48,11 +77,11 @@ const mapDispatchToProps = dispatch => ({
     id: OSC_B,
     gain,
   })),
-  changeOscAWaveform: waveform => dispatch(changeWaveform({
+  changeOscAWaveform: waveform => dispatch(changeOscWaveform({
     id: OSC_A,
     waveform,
   })),
-  changeOscBWaveform: waveform => dispatch(changeWaveform({
+  changeOscBWaveform: waveform => dispatch(changeOscWaveform({
     id: OSC_B,
     waveform,
   })),

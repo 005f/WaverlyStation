@@ -1,3 +1,5 @@
+export const LFO_A = 'A'
+export const LFO_B = 'B'
 export const OSC_A = 'A'
 export const OSC_B = 'B'
 

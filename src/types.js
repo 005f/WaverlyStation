@@ -16,6 +16,10 @@ export const FilterType = shape({
 
 export const AmplifierType = shape({ level: number.isRequired })
 
+export const LFOType = shape({
+  rate: number.isRequired,
+})
+
 export const OscillatorType = shape({
   waveform: string.isRequired,
   cents: number.isRequired,

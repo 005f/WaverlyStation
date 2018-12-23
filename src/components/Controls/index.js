@@ -2,13 +2,21 @@ import React from 'react'
 import { func, shape } from 'prop-types'
 import Slider from 'react-rangeslider'
 import Filter from '../Filter'
-import { AmplifierType, EnvelopeType, FilterType, OscillatorType } from '../../types'
+import {
+  AmplifierType,
+  EnvelopeType,
+  FilterType,
+  OscillatorType,
+  LFOType,
+} from '../../types'
 
 import {
   WAVEFORM_TYPE_SAW,
   WAVEFORM_TYPE_SINE,
   WAVEFORM_TYPE_SQUARE,
   WAVEFORM_TYPE_TRIANGLE,
+  LFO_A,
+  LFO_B,
   OSC_A,
   OSC_B,
 } from '../../constants'
@@ -22,6 +30,13 @@ export default function Controls({
   envelope,
   filter,
   osc,
+  lfo,
+  changeLFOARate,
+  changeLFOBRate,
+  changeLFOAWaveform,
+  changeLFOBWaveform,
+  changeLFOASend,
+  changeLFOBSend,
   changeOscACents,
   changeOscASemitones,
   changeOscBCents,
@@ -254,6 +269,120 @@ export default function Controls({
           </div>
         </div>
       </div>
+
+      <div className={`${styles['controls-group']} ${styles['split-group']}`}>
+        <div className={styles['controls-group-section']}>
+
+          <h2 className={styles['group-header']}>LFO A</h2>
+
+          <div className={styles['horizontal-group']}>
+            <div className={styles['vertical-group']}>
+              <button onClick={() => changeLFOAWaveform(WAVEFORM_TYPE_SINE)}>∿</button>
+              <button onClick={() => changeLFOAWaveform(WAVEFORM_TYPE_SAW)}>⊿⊿</button>
+              <button onClick={() => changeLFOAWaveform(WAVEFORM_TYPE_TRIANGLE)}>△</button>
+              <button onClick={() => changeLFOAWaveform(WAVEFORM_TYPE_SQUARE)}>⊓</button>
+            </div>
+            <div className={styles['slider-group']}>
+              <div className={styles['slider-wrapper']}>
+                <Slider
+                  max={20}
+                  min={0.04}
+                  onChange={changeLFOARate}
+                  orientation="vertical"
+                  step={0.02}
+                  value={lfo[LFO_A].rate}
+                />
+
+                <div>Rate</div>
+              </div>
+            </div>
+
+            <div className={styles['slider-group']}>
+              <div className={styles['slider-wrapper']}>
+                <Slider
+                  max={100}
+                  min={0}
+                  onChange={val => changeLFOASend(val, 'filterFreq')}
+                  orientation="vertical"
+                  step={1}
+                  value={lfo[LFO_A].sends.filterFreq}
+                />
+
+                <div>Filter Freq </div>
+              </div>
+
+              <div className={styles['slider-wrapper']}>
+                <Slider
+                  max={100}
+                  min={0}
+                  onChange={val => changeLFOASend(val, 'filterRes')}
+                  orientation="vertical"
+                  step={1}
+                  value={lfo[LFO_A].sends.filterRes}
+                />
+
+                <div>Filter Resonance </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles['controls-group-section']}>
+
+          <h2 className={styles['group-header']}>LFO B</h2>
+
+          <div className={styles['horizontal-group']}>
+            <div className={styles['vertical-group']}>
+              <button onClick={() => changeLFOBWaveform(WAVEFORM_TYPE_SINE)}>∿</button>
+              <button onClick={() => changeLFOBWaveform(WAVEFORM_TYPE_SAW)}>⊿⊿</button>
+              <button onClick={() => changeLFOBWaveform(WAVEFORM_TYPE_TRIANGLE)}>△</button>
+              <button onClick={() => changeLFOBWaveform(WAVEFORM_TYPE_SQUARE)}>⊓</button>
+            </div>
+            <div className={styles['slider-group']}>
+              <div className={styles['slider-wrapper']}>
+                <Slider
+                  max={20}
+                  min={0.04}
+                  onChange={changeLFOBRate}
+                  orientation="vertical"
+                  step={0.02}
+                  value={lfo[LFO_B].rate}
+                />
+
+                <div>Rate</div>
+              </div>
+            </div>
+
+            <div className={styles['slider-group']}>
+              <div className={styles['slider-wrapper']}>
+                <Slider
+                  max={100}
+                  min={0}
+                  onChange={val => changeLFOBSend(val, 'filterFreq')}
+                  orientation="vertical"
+                  step={1}
+                  value={lfo[LFO_B].sends.filterFreq}
+                />
+
+                <div>Filter Freq </div>
+              </div>
+
+              <div className={styles['slider-wrapper']}>
+                <Slider
+                  max={100}
+                  min={0}
+                  onChange={val => changeLFOBSend(val, 'filterRes')}
+                  orientation="vertical"
+                  step={1}
+                  value={lfo[LFO_B].sends.filterRes}
+                />
+
+                <div>Filter Resonance </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
@@ -262,6 +391,10 @@ Controls.propTypes = {
   amplifier: AmplifierType.isRequired,
   envelope: EnvelopeType.isRequired,
   filter: FilterType.isRequired,
+  lfo: shape({
+    [LFO_A]: LFOType.isRequired,
+    [LFO_B]: LFOType.isRequired,
+  }).isRequired,
   osc: shape({
     [OSC_A]: OscillatorType.isRequired,
     [OSC_B]: OscillatorType.isRequired,
@@ -273,6 +406,12 @@ Controls.propTypes = {
   changeAmpLevel: func.isRequired,
   changeCutoff: func.isRequired,
   changeQ: func.isRequired,
+  changeLFOARate: func.isRequired,
+  changeLFOBRate: func.isRequired,
+  changeLFOAWaveform: func.isRequired,
+  changeLFOBWaveform: func.isRequired,
+  changeLFOASend: func.isRequired,
+  changeLFOBSend: func.isRequired,
   changeOscAWaveform: func.isRequired,
   changeOscBWaveform: func.isRequired,
   changeOscACents: func.isRequired,
