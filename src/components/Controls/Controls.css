@@ -1,3 +1,7 @@
+button {
+    z-index: 9999; /* Remove once rangesliders have been replaced */
+}
+
 .control-panel {
     border: 5px solid black;
     padding: 5px;

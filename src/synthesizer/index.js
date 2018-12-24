@@ -1,10 +1,12 @@
 import ADSREnvelope from 'adsr-envelope'
 import store from '../index'
 import { updateFilterResponse } from '../actions'
+import { initializeLFO } from './lfo'
 import { createGainNodeForOsc, initializeOsc } from './osc'
 import { createFilter, updateFilter, getLogFilterResponse } from './filter'
+import { connectToMulti } from './utils'
 
-import { OSC_A, OSC_B } from '../constants'
+import { LFO_A, LFO_B, OSC_A, OSC_B } from '../constants'
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext
 
@@ -18,6 +20,14 @@ let settings = {}
 let filter1
 
 function playNote(note) {
+  const lfoA = initializeLFO(ctx, settings.lfo[LFO_A])
+  const lfoB = initializeLFO(ctx, settings.lfo[LFO_B])
+
+  const lfoAFilterRes = createGainNodeForOsc(ctx, lfoA, settings.lfo[LFO_A].sends.filterFreq)
+  const lfoAFilterFreq = createGainNodeForOsc(ctx, lfoA, settings.lfo[LFO_A].sends.filterRes)
+  const lfoBFilterRes = createGainNodeForOsc(ctx, lfoB, settings.lfo[LFO_B].sends.filterFreq)
+  const lfoBFilterFreq = createGainNodeForOsc(ctx, lfoB, settings.lfo[LFO_B].sends.filterRes)
+
   const oscA = initializeOsc(ctx, settings.osc[OSC_A], note)
   const oscB = initializeOsc(ctx, settings.osc[OSC_B], note)
 
@@ -28,6 +38,12 @@ function playNote(note) {
   // With the extra filter, we have to half the Q to prevent double resonance
   filter1 = createFilter(ctx, 'lowpass', settings.filter.cutoff, settings.filter.Q / 2)
   const filter2 = createFilter(ctx, 'lowpass', settings.filter.cutoff, settings.filter.Q / 2)
+
+  connectToMulti(lfoAFilterRes, filter1.frequency, filter2.frequency)
+  connectToMulti(lfoAFilterFreq, filter1.Q, filter2.Q)
+
+  connectToMulti(lfoBFilterRes, filter1.frequency, filter2.frequency)
+  connectToMulti(lfoBFilterFreq, filter1.Q, filter2.Q)
 
   const env = new ADSREnvelope({
     decayTime: settings.envelope.decayTime,
@@ -52,6 +68,9 @@ function playNote(note) {
 
   oscA.start(ctx.currentTime)
   oscB.start(ctx.currentTime)
+
+  lfoA.start(ctx.currentTime)
+  lfoB.start(ctx.currentTime)
 
   const startTime = ctx.currentTime
 
@@ -81,6 +100,9 @@ function playNote(note) {
 
     oscA.stop(startTime + env.duration)
     oscB.stop(startTime + env.duration)
+
+    lfoA.stop(startTime + env.duration)
+    lfoB.stop(startTime + env.duration)
 
     lockedKeys[note] = false
   }

@@ -259,7 +259,7 @@ export default function Controls({
         <div className={styles['slider-group']}>
           <div className={styles['slider-wrapper']}>
             <Slider
-              max={0.5}
+              max={1}
               min={0}
               onChange={changeAmpLevel}
               orientation="vertical"

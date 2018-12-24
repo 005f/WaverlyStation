@@ -45,7 +45,9 @@ const mapDispatchToProps = dispatch => ({
   })),
   changeLFOASend: (value, destination) => dispatch(changeLFOSend({
     id: LFO_A,
-    [destination]: value,
+    sends: {
+      [destination]: value,
+    },
   })),
   changeLFOBSend: (value, destination) => dispatch(changeLFOSend({
     id: LFO_B,
