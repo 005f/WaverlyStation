@@ -1,10 +1,9 @@
 import ADSREnvelope from 'adsr-envelope'
 import store from '../index'
 import { updateFilterResponse } from '../actions'
-import { initializeLFO } from './lfo'
+import { createModulation, initializeLFO } from './lfo'
 import { createGainNodeForOsc, initializeOsc } from './osc'
 import { createFilter, updateFilter, getLogFilterResponse } from './filter'
-import { connectToMulti } from './utils'
 
 import { LFO_A, LFO_B, OSC_A, OSC_B } from '../constants'
 
@@ -23,10 +22,8 @@ function playNote(note) {
   const lfoA = initializeLFO(ctx, settings.lfo[LFO_A])
   const lfoB = initializeLFO(ctx, settings.lfo[LFO_B])
 
-  const lfoAFilterRes = createGainNodeForOsc(ctx, lfoA, settings.lfo[LFO_A].sends.filterFreq)
-  const lfoAFilterFreq = createGainNodeForOsc(ctx, lfoA, settings.lfo[LFO_A].sends.filterRes)
-  const lfoBFilterRes = createGainNodeForOsc(ctx, lfoB, settings.lfo[LFO_B].sends.filterFreq)
-  const lfoBFilterFreq = createGainNodeForOsc(ctx, lfoB, settings.lfo[LFO_B].sends.filterRes)
+  const lfoASends = settings.lfo[LFO_A].sends
+  const lfoBSends = settings.lfo[LFO_B].sends
 
   const oscA = initializeOsc(ctx, settings.osc[OSC_A], note)
   const oscB = initializeOsc(ctx, settings.osc[OSC_B], note)
@@ -39,13 +36,8 @@ function playNote(note) {
   filter1 = createFilter(ctx, 'lowpass', settings.filter.cutoff, settings.filter.Q / 2)
   const filter2 = createFilter(ctx, 'lowpass', settings.filter.cutoff, settings.filter.Q / 2)
 
-  connectToMulti(lfoAFilterRes, filter1.frequency, filter2.frequency)
-  connectToMulti(lfoAFilterFreq, filter1.Q, filter2.Q)
-
-  connectToMulti(lfoBFilterRes, filter1.frequency, filter2.frequency)
-  connectToMulti(lfoBFilterFreq, filter1.Q, filter2.Q)
-
   const env = new ADSREnvelope({
+    attackTime: settings.envelope.attackTime,
     decayTime: settings.envelope.decayTime,
     decayCurve: settings.envelope.decayCurve,
     sustainLevel: settings.envelope.sustainLevel,
@@ -65,6 +57,17 @@ function playNote(note) {
   filter2.connect(envGain)
   envGain.connect(masterGain)
   masterGain.connect(ctx.destination)
+
+  createModulation(ctx, lfoA, lfoASends.filterFreq, filter1.frequency, filter2.frequency)
+  createModulation(ctx, lfoA, lfoASends.filterRes, filter1.Q, filter2.Q)
+  createModulation(ctx, lfoA, lfoASends.oscAFine, oscA.detune)
+  createModulation(ctx, lfoA, lfoASends.oscBFine, oscB.detune)
+
+  createModulation(ctx, lfoB, lfoBSends.filterFreq, filter1.frequency, filter2.frequency)
+  createModulation(ctx, lfoB, lfoBSends.filterRes, filter1.Q, filter2.Q)
+  createModulation(ctx, lfoA, lfoBSends.oscAFine, oscA.detune)
+  createModulation(ctx, lfoA, lfoBSends.oscBFine, oscB.detune)
+
 
   oscA.start(ctx.currentTime)
   oscB.start(ctx.currentTime)
@@ -122,7 +125,7 @@ function playNote(note) {
   }
 }
 
-const handleKeydown = (e) => {
+function handleKeydown(e) {
   // keydown event fires multiple times so we only handle the first event
   if (!lockedKeys[e.keyCode]) {
     lockedKeys[e.keyCode] = true

@@ -14,6 +14,8 @@ const defaultLFO = {
   sends: {
     filterFreq: 0,
     filterRes: 0,
+    oscAFine: 0,
+    oscBFine: 0,
   },
 }
 

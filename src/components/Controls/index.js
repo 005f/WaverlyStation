@@ -323,6 +323,32 @@ export default function Controls({
 
                 <div>Filter Resonance </div>
               </div>
+
+              <div className={styles['slider-wrapper']}>
+                <Slider
+                  max={100}
+                  min={0}
+                  onChange={val => changeLFOASend(val, 'oscAFine')}
+                  orientation="vertical"
+                  step={1}
+                  value={lfo[LFO_A].sends.oscAFine}
+                />
+
+                <div>Osc A Pitch </div>
+              </div>
+
+              <div className={styles['slider-wrapper']}>
+                <Slider
+                  max={100}
+                  min={0}
+                  onChange={val => changeLFOASend(val, 'oscBFine')}
+                  orientation="vertical"
+                  step={1}
+                  value={lfo[LFO_A].sends.oscBFine}
+                />
+
+                <div>Osc B Pitch</div>
+              </div>
             </div>
           </div>
         </div>
@@ -378,6 +404,32 @@ export default function Controls({
                 />
 
                 <div>Filter Resonance </div>
+              </div>
+
+              <div className={styles['slider-wrapper']}>
+                <Slider
+                  max={100}
+                  min={0}
+                  onChange={val => changeLFOBSend(val, 'oscAFine')}
+                  orientation="vertical"
+                  step={1}
+                  value={lfo[LFO_B].sends.oscAFine}
+                />
+
+                <div>Osc A Pitch </div>
+              </div>
+
+              <div className={styles['slider-wrapper']}>
+                <Slider
+                  max={100}
+                  min={0}
+                  onChange={val => changeLFOBSend(val, 'oscBFine')}
+                  orientation="vertical"
+                  step={1}
+                  value={lfo[LFO_B].sends.oscBFine}
+                />
+
+                <div>Osc B Pitch </div>
               </div>
             </div>
           </div>
