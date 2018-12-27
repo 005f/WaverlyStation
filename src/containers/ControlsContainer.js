@@ -1,18 +1,19 @@
 import { connect } from 'react-redux'
 import Controls from '../components/Controls'
 import {
-  changeCents,
-  changeSemitones,
-  changeOscGain,
-  changeAttack,
-  changeDecay,
-  changeSustain,
-  changeRelease,
   changeAmpLevel,
-  changeOscWaveform,
+  changeAttack,
+  changeCents,
+  changeDecay,
   changeLFORate,
-  changeLFOWaveform,
   changeLFOSend,
+  changeLFOWaveform,
+  changeNoiseAmount,
+  changeOscGain,
+  changeOscWaveform,
+  changeRelease,
+  changeSemitones,
+  changeSustain,
   updateFilterCutoff,
   updateFilterQ,
 } from '../actions'
@@ -55,6 +56,7 @@ const mapDispatchToProps = dispatch => ({
       [destination]: value,
     },
   })),
+  changeNoiseAmount: amount => dispatch(changeNoiseAmount(amount)),
   changeOscACents: cents => dispatch(changeCents({
     id: OSC_A,
     cents,

@@ -64,6 +64,18 @@ const defaultOsc = {
   gain: 0.8,
 }
 
+const noise = (
+  state = { amount: 0 },
+  action,
+) => {
+  switch (action.type) {
+    case 'CHANGE_NOISE_AMOUNT':
+      return { ...state, amount: action.payload }
+    default:
+      return state
+  }
+}
+
 const oscReducer = (state, action) => {
   switch (action.type) {
     case 'CHANGE_OSC_WAVEFORM':
@@ -157,6 +169,7 @@ const amplifier = (
 
 const rootReducer = combineReducers({
   lfo,
+  noise,
   osc,
   envelope,
   filter,

@@ -20,6 +20,8 @@ export const LFOType = shape({
   rate: number.isRequired,
 })
 
+export const NoiseType = shape({ amount: number.isRequired })
+
 export const OscillatorType = shape({
   waveform: string.isRequired,
   cents: number.isRequired,

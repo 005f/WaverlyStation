@@ -6,6 +6,8 @@ export const changeLFORate = createAction('CHANGE_LFO_RATE')
 export const changeLFOWaveform = createAction('CHANGE_LFO_WAVEFORM')
 export const changeLFOSend = createAction('CHANGE_LFO_SEND')
 
+export const changeNoiseAmount = createAction('CHANGE_NOISE_AMOUNT')
+
 export const changeOscWaveform = createAction('CHANGE_OSC_WAVEFORM')
 export const changeCents = createAction('CHANGE_CENTS')
 export const changeSemitones = createAction('CHANGE_SEMITONES')

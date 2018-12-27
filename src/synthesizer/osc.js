@@ -14,12 +14,3 @@ export function initializeOsc(ctx, settings, note) {
 
   return osc
 }
-
-export function createGainNodeForOsc(ctx, osc, level) {
-  const gain = ctx.createGain()
-  gain.gain.setValueAtTime(level, ctx.currentTime)
-
-  osc.connect(gain)
-
-  return gain
-}

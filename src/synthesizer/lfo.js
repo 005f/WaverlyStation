@@ -1,5 +1,4 @@
-import { connectToMulti } from './utils'
-import { createGainNodeForOsc } from './osc'
+import { connectToMulti, createGainNodeForNode } from './utils'
 
 export function initializeLFO(ctx, settings) {
   const lfo = ctx.createOscillator()
@@ -11,7 +10,7 @@ export function initializeLFO(ctx, settings) {
 }
 
 export function createModulation(ctx, source, value, ...destinations) {
-  const gain = createGainNodeForOsc(ctx, source, value)
+  const gain = createGainNodeForNode(ctx, source, value)
 
   connectToMulti(gain, ...destinations)
 }

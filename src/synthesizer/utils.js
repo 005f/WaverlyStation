@@ -3,3 +3,16 @@ export function connectToMulti(sourceNode, ...targetNodes) {
 }
 
 export const semitonesAsCents = semitones => semitones * 100
+
+export function createGainNodeForNode(ctx, node, level) {
+  const gain = ctx.createGain()
+  gain.gain.setValueAtTime(level, ctx.currentTime)
+
+  node.connect(gain)
+
+  return gain
+}
+
+export function randomIndex(array) {
+  return Math.round(Math.random() * array.length)
+}

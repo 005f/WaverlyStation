@@ -6,8 +6,9 @@ import {
   AmplifierType,
   EnvelopeType,
   FilterType,
-  OscillatorType,
   LFOType,
+  NoiseType,
+  OscillatorType,
 } from '../../types'
 
 import {
@@ -27,31 +28,33 @@ import '!style-loader!css-loader!react-rangeslider/lib/index.css' // eslint-disa
 
 export default function Controls({
   amplifier,
+  changeAmpLevel,
+  changeAttack,
+  changeCutoff,
+  changeDecay,
+  changeLFOARate,
+  changeLFOASend,
+  changeLFOAWaveform,
+  changeLFOBRate,
+  changeLFOBSend,
+  changeLFOBWaveform,
+  changeNoiseAmount,
+  changeOscACents,
+  changeOscAGain,
+  changeOscASemitones,
+  changeOscAWaveform,
+  changeOscBCents,
+  changeOscBGain,
+  changeOscBSemitones,
+  changeOscBWaveform,
+  changeQ,
+  changeRelease,
+  changeSustain,
   envelope,
   filter,
-  osc,
   lfo,
-  changeLFOARate,
-  changeLFOBRate,
-  changeLFOAWaveform,
-  changeLFOBWaveform,
-  changeLFOASend,
-  changeLFOBSend,
-  changeOscACents,
-  changeOscASemitones,
-  changeOscBCents,
-  changeOscBSemitones,
-  changeAttack,
-  changeDecay,
-  changeSustain,
-  changeRelease,
-  changeAmpLevel,
-  changeCutoff,
-  changeQ,
-  changeOscAWaveform,
-  changeOscBWaveform,
-  changeOscAGain,
-  changeOscBGain,
+  noise,
+  osc,
 }) {
   return (
     <div className={styles['control-panel']}>
@@ -163,6 +166,28 @@ export default function Controls({
             </div>
           </div>
         </div>
+
+        <div className={styles['controls-group-section']}>
+
+          <h2 className={styles['group-header']}>Noise</h2>
+
+          <div className={styles['horizontal-group']}>
+            <div className={styles['slider-group']}>
+              <div className={styles['slider-wrapper']}>
+                <Slider
+                  max={1}
+                  min={0}
+                  onChange={changeNoiseAmount}
+                  orientation="vertical"
+                  step={0.05}
+                  value={noise.amount}
+                />
+
+                <div>Amount</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className={styles['controls-group']}>
@@ -259,7 +284,7 @@ export default function Controls({
         <div className={styles['slider-group']}>
           <div className={styles['slider-wrapper']}>
             <Slider
-              max={1}
+              max={0.5}
               min={0}
               onChange={changeAmpLevel}
               orientation="vertical"
@@ -447,29 +472,31 @@ Controls.propTypes = {
     [LFO_A]: LFOType.isRequired,
     [LFO_B]: LFOType.isRequired,
   }).isRequired,
+  noise: NoiseType.isRequired,
   osc: shape({
     [OSC_A]: OscillatorType.isRequired,
     [OSC_B]: OscillatorType.isRequired,
   }).isRequired,
-  changeAttack: func.isRequired,
-  changeDecay: func.isRequired,
-  changeSustain: func.isRequired,
-  changeRelease: func.isRequired,
   changeAmpLevel: func.isRequired,
+  changeAttack: func.isRequired,
   changeCutoff: func.isRequired,
-  changeQ: func.isRequired,
+  changeDecay: func.isRequired,
   changeLFOARate: func.isRequired,
-  changeLFOBRate: func.isRequired,
-  changeLFOAWaveform: func.isRequired,
-  changeLFOBWaveform: func.isRequired,
   changeLFOASend: func.isRequired,
+  changeLFOAWaveform: func.isRequired,
+  changeLFOBRate: func.isRequired,
   changeLFOBSend: func.isRequired,
-  changeOscAWaveform: func.isRequired,
-  changeOscBWaveform: func.isRequired,
+  changeLFOBWaveform: func.isRequired,
+  changeNoiseAmount: func.isRequired,
   changeOscACents: func.isRequired,
-  changeOscASemitones: func.isRequired,
-  changeOscBCents: func.isRequired,
-  changeOscBSemitones: func.isRequired,
   changeOscAGain: func.isRequired,
+  changeOscASemitones: func.isRequired,
+  changeOscAWaveform: func.isRequired,
+  changeOscBCents: func.isRequired,
   changeOscBGain: func.isRequired,
+  changeOscBSemitones: func.isRequired,
+  changeOscBWaveform: func.isRequired,
+  changeQ: func.isRequired,
+  changeRelease: func.isRequired,
+  changeSustain: func.isRequired,
 }
