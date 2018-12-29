@@ -58,7 +58,7 @@ export default function Controls({
 }) {
   return (
     <div className={styles['control-panel']}>
-      <div className={`${styles['controls-group']} ${styles['split-group']}`}>
+      <div className={`${styles['controls-group']} ${styles['osc-group']}`}>
         <div className={styles['controls-group-section']}>
 
           <h2 className={styles['group-header']}>Oscilator A</h2>
@@ -167,135 +167,139 @@ export default function Controls({
           </div>
         </div>
 
-        <div className={styles['controls-group-section']}>
+        <div className={`${styles['horizontal-group']} ${styles['controls-group-section']}`}>
 
           <h2 className={styles['group-header']}>Noise</h2>
 
-          <div className={styles['horizontal-group']}>
-            <div className={styles['slider-group']}>
-              <div className={styles['slider-wrapper']}>
-                <Slider
-                  max={1}
-                  min={0}
-                  onChange={changeNoiseAmount}
-                  orientation="vertical"
-                  step={0.05}
-                  value={noise.amount}
-                />
+          <div className={styles['slider-group']}>
+            <div className={styles['slider-wrapper']}>
+              <Slider
+                max={1}
+                min={0}
+                onChange={changeNoiseAmount}
+                orientation="vertical"
+                step={0.05}
+                value={noise.amount}
+              />
 
-                <div>Amount</div>
-              </div>
+              <div>Amount</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className={`${styles['controls-group']} ${styles['env-group']}`}>
+        <div className={styles['controls-group-section']}>
+          <h2 className={styles['group-header']}>Envelope</h2>
+
+          <div className={styles['slider-group']}>
+            <div className={styles['slider-wrapper']}>
+              <Slider
+                max={4}
+                onChange={changeAttack}
+                orientation="vertical"
+                step={0.01}
+                value={envelope.attackTime}
+              />
+
+              <div>Attack</div>
+            </div>
+
+            <div className={styles['slider-wrapper']}>
+              <Slider
+                max={4}
+                onChange={changeDecay}
+                orientation="vertical"
+                step={0.02}
+                value={envelope.decayTime}
+              />
+
+              <div>Decay</div>
+            </div>
+
+            <div className={styles['slider-wrapper']}>
+              <Slider
+                max={1}
+                onChange={changeSustain}
+                orientation="vertical"
+                step={0.001}
+                value={envelope.sustainLevel}
+              />
+
+              <div>Sustain</div>
+            </div>
+
+            <div className={styles['slider-wrapper']}>
+              <Slider
+                max={4}
+                onChange={changeRelease}
+                orientation="vertical"
+                step={0.02}
+                value={envelope.releaseTime}
+              />
+
+              <div>Release</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className={`${styles['controls-group']} ${styles['filter-group']}`}>
+        <div className={styles['controls-group-section']}>
+          <h2 className={styles['group-header']}>Filter</h2>
+
+          <Filter response={filter.response} />
+
+          <div className={styles['slider-group']}>
+            <div className={styles['slider-wrapper']}>
+              <Slider
+                max={20000}
+                min={30}
+                onChange={changeCutoff}
+                orientation="vertical"
+                step={10}
+                value={filter.cutoff}
+              />
+
+              <div>Cutoff</div>
+            </div>
+
+            <div className={styles['slider-wrapper']}>
+              <Slider
+                max={24}
+                min={0.2}
+                onChange={changeQ}
+                orientation="vertical"
+                step={0.2}
+                value={filter.Q}
+              />
+
+              <div>Resonance</div>
             </div>
           </div>
         </div>
       </div>
 
       <div className={styles['controls-group']}>
-        <h2 className={styles['group-header']}>Envelope</h2>
+        <div className={styles['controls-group-section']}>
+          <h2 className={styles['group-header']}>Amplifier</h2>
 
-        <div className={styles['slider-group']}>
-          <div className={styles['slider-wrapper']}>
-            <Slider
-              max={4}
-              onChange={changeAttack}
-              orientation="vertical"
-              step={0.01}
-              value={envelope.attackTime}
-            />
-
-            <div>Attack</div>
-          </div>
-
-          <div className={styles['slider-wrapper']}>
-            <Slider
-              max={4}
-              onChange={changeDecay}
-              orientation="vertical"
-              step={0.02}
-              value={envelope.decayTime}
-            />
-
-            <div>Decay</div>
-          </div>
-
-          <div className={styles['slider-wrapper']}>
-            <Slider
-              max={1}
-              onChange={changeSustain}
-              orientation="vertical"
-              step={0.001}
-              value={envelope.sustainLevel}
-            />
-
-            <div>Sustain</div>
-          </div>
-
-          <div className={styles['slider-wrapper']}>
-            <Slider
-              max={4}
-              onChange={changeRelease}
-              orientation="vertical"
-              step={0.02}
-              value={envelope.releaseTime}
-            />
-
-            <div>Release</div>
+          <div className={styles['slider-group']}>
+            <div className={styles['slider-wrapper']}>
+              <Slider
+                max={0.5}
+                min={0}
+                onChange={changeAmpLevel}
+                orientation="vertical"
+                step={0.05}
+                value={amplifier.level}
+              />
+            </div>
           </div>
         </div>
       </div>
 
-      <div className={styles['controls-group']}>
-        <h2 className={styles['group-header']}>Filter</h2>
-
-        <Filter response={filter.response} />
-
-        <div className={styles['slider-group']}>
-          <div className={styles['slider-wrapper']}>
-            <Slider
-              max={20000}
-              min={30}
-              onChange={changeCutoff}
-              orientation="vertical"
-              step={10}
-              value={filter.cutoff}
-            />
-
-            <div>Cutoff</div>
-          </div>
-
-          <div className={styles['slider-wrapper']}>
-            <Slider
-              max={24}
-              min={0.2}
-              onChange={changeQ}
-              orientation="vertical"
-              step={0.2}
-              value={filter.Q}
-            />
-
-            <div>Resonance</div>
-          </div>
-        </div>
-      </div>
-
-      <div className={styles['controls-group']}>
-        <h2 className={styles['group-header']}>Amplifier</h2>
-
-        <div className={styles['slider-group']}>
-          <div className={styles['slider-wrapper']}>
-            <Slider
-              max={0.5}
-              min={0}
-              onChange={changeAmpLevel}
-              orientation="vertical"
-              step={0.05}
-              value={amplifier.level}
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className={`${styles['controls-group']} ${styles['split-group']}`}>
+      <div className={`${styles['controls-group']} ${styles['lfo-group']} ${styles['horizontal-group']}`}>
         <div className={styles['controls-group-section']}>
 
           <h2 className={styles['group-header']}>LFO A</h2>
