@@ -6,6 +6,7 @@ import { createGainNodeForNode } from './utils'
 import { createModulation, initializeLFO } from './lfo'
 import { createWhitenoiseBuffer, createWhiteNoiseNode } from './noise'
 import { initializeOsc } from './osc'
+import keyboardMapping from './keyboard'
 
 import { LFO_A, LFO_B, OSC_A, OSC_B } from '../constants'
 
@@ -141,10 +142,10 @@ function playNote(note) {
 
 function handleKeydown(e) {
   // keydown event fires multiple times so we only handle the first event
-  if (!lockedKeys[e.keyCode]) {
-    lockedKeys[e.keyCode] = true
+  if (!lockedKeys[keyboardMapping[e.keyCode]]) {
+    lockedKeys[keyboardMapping[e.keyCode]] = true
 
-    playNote(e.keyCode)
+    playNote(keyboardMapping[e.keyCode])
   }
 }
 
