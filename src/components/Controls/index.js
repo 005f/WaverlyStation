@@ -59,7 +59,7 @@ export default function Controls({
   return (
     <div className={styles['control-panel']}>
       <div className={`${styles['controls-group']} ${styles['osc-group']}`}>
-        <div className={styles['controls-group-section']}>
+        <div className={`${styles['controls-group-section']} pastel-blue`}>
 
           <h2 className={styles['group-header']}>Oscilator A</h2>
 
@@ -113,7 +113,7 @@ export default function Controls({
           </div>
         </div>
 
-        <div className={styles['controls-group-section']}>
+        <div className={`${styles['controls-group-section']} pastel-red`}>
           <h2 className={styles['group-header']}>Oscilator B</h2>
 
           <div className={styles['horizontal-group']}>
@@ -166,9 +166,10 @@ export default function Controls({
             </div>
           </div>
         </div>
+      </div>
 
-        <div className={`${styles['horizontal-group']} ${styles['controls-group-section']}`}>
-
+      <div className={`${styles['controls-group']} ${styles['noise-group']}`}>
+        <div className={`${styles['horizontal-group']} ${styles['controls-group-section']} pastel-yellow`}>
           <h2 className={styles['group-header']}>Noise</h2>
 
           <div className={styles['slider-group']}>
@@ -183,6 +184,42 @@ export default function Controls({
               />
 
               <div>Amount</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className={`${styles['controls-group']} ${styles['filter-group']}`}>
+        <div className={styles['controls-group-section']}>
+          <h2 className={styles['group-header']}>Filter</h2>
+
+          <Filter response={filter.response} />
+
+          <div className={styles['slider-group']}>
+            <div className={styles['slider-wrapper']}>
+              <Slider
+                max={20000}
+                min={30}
+                onChange={changeCutoff}
+                orientation="vertical"
+                step={10}
+                value={filter.cutoff}
+              />
+
+              <div>Cutoff</div>
+            </div>
+
+            <div className={styles['slider-wrapper']}>
+              <Slider
+                max={24}
+                min={0.2}
+                onChange={changeQ}
+                orientation="vertical"
+                step={0.2}
+                value={filter.Q}
+              />
+
+              <div>Resonance</div>
             </div>
           </div>
         </div>
@@ -244,44 +281,8 @@ export default function Controls({
         </div>
       </div>
 
-      <div className={`${styles['controls-group']} ${styles['filter-group']}`}>
-        <div className={styles['controls-group-section']}>
-          <h2 className={styles['group-header']}>Filter</h2>
-
-          <Filter response={filter.response} />
-
-          <div className={styles['slider-group']}>
-            <div className={styles['slider-wrapper']}>
-              <Slider
-                max={20000}
-                min={30}
-                onChange={changeCutoff}
-                orientation="vertical"
-                step={10}
-                value={filter.cutoff}
-              />
-
-              <div>Cutoff</div>
-            </div>
-
-            <div className={styles['slider-wrapper']}>
-              <Slider
-                max={24}
-                min={0.2}
-                onChange={changeQ}
-                orientation="vertical"
-                step={0.2}
-                value={filter.Q}
-              />
-
-              <div>Resonance</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className={styles['controls-group']}>
-        <div className={styles['controls-group-section']}>
+      <div className={`${styles['controls-group']} ${styles['amp-group']}`}>
+        <div className={`${styles['controls-group-section']} ${styles['amp-group']} orange`}>
           <h2 className={styles['group-header']}>Amplifier</h2>
 
           <div className={styles['slider-group']}>

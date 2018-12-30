@@ -6,6 +6,8 @@ import rootReducer from './reducers'
 import { initSynth } from './synthesizer'
 import ControlsContainer from './containers/ControlsContainer'
 
+import './global.css'
+
 /* eslint-disable no-underscore-dangle */
 const store = createStore(
   rootReducer,

@@ -1,0 +1,23 @@
+html {
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+.pastel-blue {
+    background-color: #52c2ff;
+}
+
+.pastel-red {
+    background-color: #ff707e;
+}
+
+.orange {
+    background-color: #ff8c63;
+}
+
+.pastel-yellow {
+    background-color: #fffb89;
+}

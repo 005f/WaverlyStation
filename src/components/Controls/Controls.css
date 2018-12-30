@@ -38,6 +38,10 @@ button {
     padding: 10px;
 }
 
+.controls-group-section:not(:first-child) {
+    margin-top: 10px;
+}
+
 .controls-group .group-header {
     margin-top: 6px;
     margin-bottom: 12px;
@@ -55,8 +59,8 @@ button {
 }
 
 .slider-wrapper :global(.rangeslider-vertical) {
-    height: 43px;
-    margin: 10px auto;
+    height: 50px;
+    margin: 3px auto;
 }
 
 .slider-wrapper :global(.rangeslider-vertical .rangeslider__labels) {
@@ -70,18 +74,32 @@ button {
     grid-row-end: span 6;
 }
 
-.filter-group {
+.noise-group {
     grid-column-start: 4;
     grid-column-end: span 2;
     grid-row-start: 1;
     grid-row-end: span 6;
 }
 
-.env-group {
+.filter-group {
     grid-column-start: 6;
     grid-column-end: span 2;
     grid-row-start: 1;
     grid-row-end: span 6;
+}
+
+.env-group {
+    grid-column-start: 8;
+    grid-column-end: span 2;
+    grid-row-start: 1;
+    grid-row-end: span 3;
+}
+
+.amp-group {
+    grid-column-start: 8;
+    grid-column-end: span 2;
+    grid-row-start: 4;
+    grid-row-end: span 2;
 }
 
 .lfo-group {

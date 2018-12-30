@@ -1,5 +1,5 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   module: {
@@ -12,9 +12,9 @@ module.exports = {
           'eslint-loader',
         ],
       },
-
       {
         test: /\.css$/,
+        exclude: /(\/global.css|GLOBAL_CSS|node_modules)/,
         use: [
           'style-loader',
           {
@@ -27,15 +27,27 @@ module.exports = {
           },
         ],
       },
-
+      {
+        test: /\.css$/,
+        include: /(\/global.css|GLOBAL_CSS|node_modules)/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+        ],
+      },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
-        loader: 'file-loader'
-      }
+        loader: 'file-loader',
+      },
     ],
   },
   plugins: [new HtmlWebpackPlugin({
     title: 'Waverly Station',
-    template: __dirname + '/src/index.html'
+    template: path.join(__dirname, '/src/index.html'),
   })],
-};
+}
