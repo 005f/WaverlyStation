@@ -6,6 +6,10 @@ html {
     box-sizing: inherit;
 }
 
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
 .pastel-blue {
     background-color: #52c2ff;
 }

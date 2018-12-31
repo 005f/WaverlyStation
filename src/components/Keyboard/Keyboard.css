@@ -1,0 +1,19 @@
+.keyboard {
+    width: 550px;
+    margin: auto;
+    margin-top: 8px;
+}
+
+.key-row {
+    display: flex;
+}
+
+.first-row {
+    border-top: 2px solid black;
+    border-right: 2px solid black;
+    padding-right: 11px;
+}
+
+.second-row {
+    margin-left: 11px;
+}

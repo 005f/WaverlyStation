@@ -5,6 +5,7 @@ import { createStore } from 'redux'
 import rootReducer from './reducers'
 import { initSynth } from './synthesizer'
 import ControlsContainer from './containers/ControlsContainer'
+import KeyboardContainer from './containers/KeyboardContainer'
 
 import './global.css'
 
@@ -21,7 +22,11 @@ initSynth(store)
 
 render(
   <Provider store={store}>
-    <ControlsContainer />
+    <div>
+      <ControlsContainer />
+
+      <KeyboardContainer />
+    </div>
   </Provider>,
   document.getElementById('root'),
 )
