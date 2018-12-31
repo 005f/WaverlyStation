@@ -22,6 +22,7 @@ export default function Key({
         ${first && styles['first-black']}
         ${bottomOpen && styles['open-bottom']}
         ${playing && styles.playing}
+        ${!open && !black && !bottomOpen && styles['regular-bottom']}
       `}
     >
       {children}

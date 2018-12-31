@@ -1,7 +1,7 @@
 .keyboard {
-    width: 550px;
+    width: 551px;
     margin: auto;
-    margin-top: 8px;
+    margin-top: 10px;
 }
 
 .key-row {
@@ -12,6 +12,7 @@
     border-top: 2px solid black;
     border-right: 2px solid black;
     padding-right: 11px;
+    z-index: 500;
 }
 
 .second-row {

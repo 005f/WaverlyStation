@@ -62,12 +62,30 @@ button {
 }
 
 .slider-wrapper :global(.rangeslider-vertical) {
+    background-color: #808080;
+    border-radius: 5px;
+    box-shadow: none;
     height: 50px;
+    width: 7px;
     margin: 3px auto;
 }
 
 .slider-wrapper :global(.rangeslider-vertical .rangeslider__labels) {
     width: unset;
+}
+
+.slider-wrapper  :global(.rangeslider-vertical .rangeslider__fill) {
+    background-color: black;
+    border-radius: 5px;
+}
+
+.slider-wrapper  :global(.rangeslider-vertical .rangeslider__handle) {
+    width: 25px;
+    height: 4px;
+    left: -8px;
+    top: 1px;
+    background-color: black;
+    border: none;
 }
 
 .osc-group {
