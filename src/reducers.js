@@ -177,6 +177,24 @@ const amplifier = (
   }
 }
 
+const keys = (
+  state = { playing: {} },
+  action,
+) => {
+  switch (action.type) {
+    case 'UPDATE_PLAYING_KEYS':
+      return {
+        ...state,
+        playing: {
+          ...state.playing,
+          ...action.payload,
+        },
+      }
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
   lfo,
   noise,
@@ -184,6 +202,7 @@ const rootReducer = combineReducers({
   envelope,
   filter,
   amplifier,
+  keys,
 })
 
 export default rootReducer

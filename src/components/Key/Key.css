@@ -72,3 +72,24 @@
     top: -2px;
     left: -3px;
 }
+
+.key.playing {
+    background-color: #3C2463;
+}
+
+.open.playing:after {
+    background-color: #3C2463;
+    width: 44px;
+    height: 5px;
+    border-radius: 10px;
+}
+
+.open.playing:last-child:after {
+    border-radius: 0;
+    height: 58px;
+    width: 11px;
+    bottom: unset;
+    left: unset;
+    top: 0;
+    right: -11px;
+}

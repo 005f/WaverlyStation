@@ -1,6 +1,10 @@
 import ADSREnvelope from 'adsr-envelope'
 import store from '../index'
-import { updateFilterTargetFreqs, updateFilterResponse } from '../actions'
+import {
+  updateFilterTargetFreqs,
+  updateFilterResponse,
+  updatePlayingKeys,
+} from '../actions'
 import {
   calculateFilterResponse,
   createFilter,
@@ -28,8 +32,6 @@ const ctx = new AudioContext()
 window.SAMPLE_RATE = ctx.sampleRate
 
 const whiteNoiseBuffer = createWhitenoiseBuffer(ctx)
-
-const lockedKeys = {}
 
 let settings = {}
 let filter1
@@ -133,6 +135,8 @@ function playNote(note) {
   })
 
   const releaseNote = () => {
+    store.dispatch(updatePlayingKeys({ [note]: false }))
+
     envGain.gain.cancelScheduledValues(startTime)
     env.gateTime = ctx.currentTime - startTime
     env.applyTo(envGain.gain, startTime)
@@ -142,8 +146,6 @@ function playNote(note) {
 
     lfoA.stop(startTime + env.duration)
     lfoB.stop(startTime + env.duration)
-
-    lockedKeys[note] = false
   }
 
   document.addEventListener('keyup', releaseNote)
@@ -162,11 +164,13 @@ function playNote(note) {
 }
 
 function handleKeydown(e) {
-  // keydown event fires multiple times so we only handle the first event
-  if (!lockedKeys[keyboardMapping[e.keyCode]]) {
-    lockedKeys[keyboardMapping[e.keyCode]] = true
+  const note = keyboardMapping[e.keyCode]
 
-    playNote(keyboardMapping[e.keyCode])
+  // keydown event fires multiple times so we only handle the first event
+  if (!settings.keys.playing[note]) {
+    store.dispatch(updatePlayingKeys({ [note]: true }))
+
+    playNote(note)
   }
 }
 

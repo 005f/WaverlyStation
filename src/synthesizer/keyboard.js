@@ -23,7 +23,7 @@ const keyboardMappings = {
   76: octaves[5]['D'],   // L
   80: octaves[5]['D#'],  // P
   186: octaves[5]['E'],  // ;
-  219: octaves[5]['E#'], // [
+  219: octaves[5]['F'],  // [
   222: octaves[5]['F'],  // '
 }
 /* eslint-enable no-multi-spaces */

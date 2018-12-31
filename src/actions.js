@@ -34,5 +34,6 @@ export function updateFilterQ(Q) {
   store.dispatch(updateFilterResponse(getLogFilterResponseFromSettings()))
 }
 
+export const updatePlayingKeys = createAction('UPDATE_PLAYING_KEYS')
 
 export const changeAmpLevel = createAction('CHANGE_AMP_LEVEL')

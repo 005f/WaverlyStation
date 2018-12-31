@@ -10,6 +10,7 @@ export default function Key({
   first,
   last,
   open,
+  playing,
 }) {
   return (
     <div
@@ -20,6 +21,7 @@ export default function Key({
         ${last && styles['last-black']}
         ${first && styles['first-black']}
         ${bottomOpen && styles['open-bottom']}
+        ${playing && styles.playing}
       `}
     >
       {children}
@@ -33,6 +35,7 @@ Key.defaultProps = {
   first: false,
   last: false,
   open: false,
+  playing: false,
 }
 
 Key.propTypes = {
@@ -42,4 +45,5 @@ Key.propTypes = {
   first: bool,
   last: bool,
   open: bool,
+  playing: bool,
 }
