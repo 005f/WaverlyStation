@@ -12,6 +12,7 @@ import {
 } from '../../types'
 
 import {
+  FILTER_GRAPH_FREQ_RESOLUTION,
   WAVEFORM_TYPE_SAW,
   WAVEFORM_TYPE_SINE,
   WAVEFORM_TYPE_SQUARE,
@@ -198,12 +199,13 @@ export default function Controls({
           <div className={styles['slider-group']}>
             <div className={styles['slider-wrapper']}>
               <Slider
-                max={20000}
-                min={30}
+                max={FILTER_GRAPH_FREQ_RESOLUTION}
+                min={1}
                 onChange={changeCutoff}
                 orientation="vertical"
                 step={10}
-                value={filter.cutoff}
+                value={filter.cutoffIndex}
+                format={val => filter.frequencies[val]}
               />
 
               <div>Cutoff</div>

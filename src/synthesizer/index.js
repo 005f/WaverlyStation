@@ -1,14 +1,25 @@
 import ADSREnvelope from 'adsr-envelope'
 import store from '../index'
-import { updateFilterResponse } from '../actions'
-import { createFilter, updateFilter, getLogFilterResponse } from './filter'
+import { updateFilterTargetFreqs, updateFilterResponse } from '../actions'
+import {
+  calculateFilterResponse,
+  createFilter,
+  updateFilter,
+  getLogScaleFrequencySample,
+} from './filter'
 import { createGainNodeForNode } from './utils'
 import { createModulation, initializeLFO } from './lfo'
 import { createWhitenoiseBuffer, createWhiteNoiseNode } from './noise'
 import { initializeOsc } from './osc'
 import keyboardMapping from './keyboard'
 
-import { LFO_A, LFO_B, OSC_A, OSC_B } from '../constants'
+import {
+  FILTER_GRAPH_FREQ_RESOLUTION,
+  LFO_A,
+  LFO_B,
+  OSC_A,
+  OSC_B,
+} from '../constants'
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext
 
@@ -41,8 +52,18 @@ function playNote(note) {
 
   // We use 2 filters to simulate a 4-pole filter with 24db per octave of roll off
   // With the extra filter, we have to half the Q to prevent double resonance
-  filter1 = createFilter(ctx, 'lowpass', settings.filter.cutoff, settings.filter.Q / 2)
-  const filter2 = createFilter(ctx, 'lowpass', settings.filter.cutoff, settings.filter.Q / 2)
+  filter1 = createFilter(
+    ctx,
+    'lowpass',
+    settings.filter.cutoff,
+    settings.filter.Q / 2,
+  )
+  const filter2 = createFilter(
+    ctx,
+    'lowpass',
+    settings.filter.cutoff,
+    settings.filter.Q / 2,
+  )
 
   const env = new ADSREnvelope({
     attackTime: settings.envelope.attackTime,
@@ -149,7 +170,8 @@ function handleKeydown(e) {
   }
 }
 
-export const getLogFilterResponseFromSettings = () => getLogFilterResponse(
+export const getLogFilterResponseFromSettings = () => calculateFilterResponse(
+  settings.filter.frequencies,
   settings.filter.cutoff,
   settings.filter.Q,
 )
@@ -160,7 +182,13 @@ export function initSynth(reduxStore) {
     settings = reduxStore.getState()
   })
 
-  reduxStore.dispatch(updateFilterResponse(getLogFilterResponseFromSettings()))
+  const filterTargetFreqs = getLogScaleFrequencySample(FILTER_GRAPH_FREQ_RESOLUTION)
+  reduxStore.dispatch(updateFilterTargetFreqs(filterTargetFreqs))
+  reduxStore.dispatch(updateFilterResponse(calculateFilterResponse(
+    filterTargetFreqs,
+    settings.filter.cutoff,
+    settings.filter.Q,
+  )))
 
   document.addEventListener('keydown', handleKeydown)
 }

@@ -137,7 +137,8 @@ const envelope = (
 
 const filter = (
   state = {
-    cutoff: 350,
+    cutoff: 787.6761966576976,
+    cutoffIndex: 159,
     Q: 1,
     response: new Float32Array(),
   },
@@ -145,11 +146,20 @@ const filter = (
 ) => {
   switch (action.type) {
     case 'CHANGE_CUTOFF':
-      return Object.assign({}, state, { cutoff: action.payload })
+      return Object.assign(
+        {},
+        state,
+        {
+          cutoff: state.frequencies[action.payload - 1],
+          cutoffIndex: action.payload - 1,
+        },
+      )
     case 'CHANGE_Q':
       return Object.assign({}, state, { Q: action.payload })
     case 'UPDATE_FILTER_RESPONSE':
       return Object.assign({}, state, { response: action.payload })
+    case 'UPDATE_FILTER_TARGET_FREQS':
+      return Object.assign({}, state, { frequencies: action.payload })
     default:
       return state
   }

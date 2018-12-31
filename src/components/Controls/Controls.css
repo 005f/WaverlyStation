@@ -41,6 +41,10 @@ button {
     margin-top: 10px;
 }
 
+.horizontal-group .controls-group-section:not(:first-child) {
+    margin-top: 0;
+}
+
 .controls-group .group-header {
     margin-top: 6px;
     margin-bottom: 12px;

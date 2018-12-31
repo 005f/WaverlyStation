@@ -1,6 +1,5 @@
 import Complex from 'Complex'
 import {
-  FILTER_GRAPH_FREQ_RESOLUTION,
   FREQ_LOWER_BOUND,
   FREQ_UPPER_BOUND,
 } from '../constants'
@@ -110,7 +109,7 @@ function calculateFrequencyResponses(coeffs, freqs) {
  *
  * @return {array} - An array of response magnitudes derived from the given frequencies
  */
-function calculateFilterResponse(freqs, targetFreq, Q) {
+export function calculateFilterResponse(freqs, targetFreq, Q) {
   const coeffs = calculateFilterCoefficients(targetFreq, Q)
 
   return calculateFrequencyResponses(coeffs, freqs)
@@ -124,7 +123,7 @@ function calculateFilterResponse(freqs, targetFreq, Q) {
  * @return {array} targetFreqs - An array containing numbers representing the sampled
  *                                frequencies in Hz.
  */
-function getLogScaleFrequencySample(resolution) {
+export function getLogScaleFrequencySample(resolution) {
   const targetFreqs = []
 
   for (let i = 0; i < resolution; i += 1) {
@@ -135,10 +134,4 @@ function getLogScaleFrequencySample(resolution) {
   }
 
   return targetFreqs
-}
-
-export function getLogFilterResponse(cutoff, Q) {
-  const targetFreqs = getLogScaleFrequencySample(FILTER_GRAPH_FREQ_RESOLUTION)
-
-  return calculateFilterResponse(targetFreqs, cutoff, Q)
 }
